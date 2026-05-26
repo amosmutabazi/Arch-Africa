@@ -29,12 +29,17 @@ function setMsg(id, msg, type = 'ok') {
 
 /* ── Modal ── */
 function openModal(id) {
-  document.getElementById(id).classList.add('open');
+  const modal = document.getElementById(id);
+  modal.classList.add('open');
   document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
+  window.scrollTo(0, 0);
 }
 function closeModal(id) {
-  document.getElementById(id).classList.remove('open');
+  const modal = document.getElementById(id);
+  modal.classList.remove('open');
   document.body.style.overflow = '';
+  document.documentElement.style.overflow = '';
 }
 ['authModal', 'estimatorModal'].forEach((id) => {
   document.getElementById(id)?.addEventListener('click', (e) => {
@@ -68,10 +73,6 @@ document.getElementById('aTabLogin')?.addEventListener('click', () => showPanel(
 document.getElementById('aTabReg')?.addEventListener('click', () => showPanel('register'));
 document.getElementById('openLoginBtn')?.addEventListener('click', () => {
   showPanel('login');
-  openModal('authModal');
-});
-document.getElementById('openRegBtn')?.addEventListener('click', () => {
-  showPanel('register');
   openModal('authModal');
 });
 

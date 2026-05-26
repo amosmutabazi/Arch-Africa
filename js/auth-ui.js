@@ -1,10 +1,10 @@
 window.updateAuthUI = function () {
   const user = API.getUser();
-  const authActions = document.getElementById('authActions');
+  const loginBtn = document.getElementById('openLoginBtn');
   const userActions = document.getElementById('userActions');
-  if (!authActions || !userActions) return;
+  if (!loginBtn || !userActions) return;
 
-  authActions.style.display = user ? 'none' : 'flex';
+  loginBtn.style.display = user ? 'none' : 'inline-block';
   userActions.style.display = user ? 'flex' : 'none';
 
   if (user) {
@@ -24,16 +24,17 @@ window.doLogin = async function () {
     setMsg('lMsg', 'Please enter email and password.', 'err');
     return;
   }
+  const lMsg = document.getElementById('lMsg');
+  lMsg.textContent = 'Logging in...';
+  lMsg.className = 'auth-msg';
   try {
     const { token, user } = await API.auth.login({ email, password });
     API.setToken(token);
     API.setUser(user);
     setMsg('lMsg', '✓ Logged in', 'ok');
-    setTimeout(() => {
-      updateAuthUI();
-      closeModal('authModal');
-      showToast(`Welcome back, ${user.name}! 👋`);
-    }, 600);
+    updateAuthUI();
+    closeModal('authModal');
+    showToast(`Welcome back, ${user.name}! 👋`);
   } catch (e) {
     setMsg('lMsg', e.message, 'err');
   }
@@ -61,16 +62,17 @@ window.doRegister = async function () {
     setMsg('rMsg', 'Please accept the terms.', 'err');
     return;
   }
+  const rMsg = document.getElementById('rMsg');
+  rMsg.textContent = 'Creating account...';
+  rMsg.className = 'auth-msg';
   try {
     const { token, user } = await API.auth.register({ name, email, password });
     API.setToken(token);
     API.setUser(user);
     setMsg('rMsg', '✓ Account created', 'ok');
-    setTimeout(() => {
-      updateAuthUI();
-      closeModal('authModal');
-      showToast(`Welcome, ${name}! 🎉`);
-    }, 600);
+    updateAuthUI();
+    closeModal('authModal');
+    showToast(`Welcome, ${name}! 🎉`);
   } catch (e) {
     setMsg('rMsg', e.message, 'err');
   }

@@ -7,10 +7,17 @@ const { authRequired } = require('../middleware/auth');
 
 const router = express.Router();
 
+const JWT_SECRET =
+  process.env.JWT_SECRET ||
+  (process.env.NODE_ENV === 'production' ? '' : 'dev-jwt-secret-change-me');
+
 function signToken(user) {
+  if (!JWT_SECRET) {
+    throw new Error('JWT_SECRET is required');
+  }
   return jwt.sign(
     { id: user.id, email: user.email, name: user.name, role: user.role },
-    process.env.JWT_SECRET,
+    JWT_SECRET,
     { expiresIn: '7d' }
   );
 }
