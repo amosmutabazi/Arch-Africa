@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Admin CMS — ARCH-AFRICA</title>
+<link rel="icon" href="assets/arch-africa-logo.jpeg" type="image/jpeg"/>
+<link rel="apple-touch-icon" href="assets/arch-africa-logo.jpeg"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body class="admin-body">
+<div id="adminGate" class="admin-gate">
+  <form id="adminLoginForm" class="admin-login-card">
+    <img class="auth-logo-mark" src="assets/arch-africa-logo.jpeg" alt="ARCH-AFRICA" style="height: 60px; width: auto; object-fit: contain; border-radius: 8px;">
+    <h1>Admin Dashboard</h1>
+    <p>Sign in with an admin account to manage projects.</p>
+    <div class="f-field"><label>Email</label><input type="email" id="adminEmail" required/></div>
+    <div class="f-field"><label>Password</label><input type="password" id="adminPassword" required/></div>
+    <button class="btn-full" type="submit">Login →</button>
+    <p id="adminLoginMsg" class="auth-msg err"></p>
+    <a href="index.html" class="contact-link" style="display:block;text-align:center;margin-top:1rem">← Back to site</a>
+  </form>
+</div>
+
+<div id="adminApp" style="display:none">
+  <header class="admin-hdr">
+    <a href="index.html" class="nav-logo"><img class="nav-logo-mark" src="assets/arch-africa-logo.jpeg" alt="ARCH-AFRICA" style="height: 40px; width: auto; object-fit: contain;"><span class="nav-logo-txt">CMS</span></a>
+    <button type="button" class="btn-login" onclick="doLogout();location.reload()">Logout</button>
+  </header>
+  <div class="admin-layout container">
+    <section class="admin-form-panel">
+      <h2 id="formTitle">Add new project</h2>
+      <form id="projectForm" enctype="multipart/form-data">
+        <div class="f-field"><label>Slug</label><input id="fSlug" placeholder="my-project-name"/></div>
+        <div class="f-field"><label>Category</label>
+          <select id="fCategory">
+            <option value="house">house</option>
+            <option value="villa">villa</option>
+            <option value="hotel">hotel</option>
+            <option value="commercial">commercial</option>
+            <option value="industrial">industrial</option>
+            <option value="institutional">institutional</option>
+            <option value="greenhouse">greenhouse</option>
+          </select>
+        </div>
+        <div class="f-field"><label>Title (EN) *</label><input id="fTitleEn" required/></div>
+        <div class="f-field"><label>Title (FR)</label><input id="fTitleFr"/></div>
+        <div class="f-field"><label>Title (RW)</label><input id="fTitleRw"/></div>
+        <div class="f-field"><label>Description (EN) *</label><textarea id="fDescEn" rows="3" required></textarea></div>
+        <div class="f-field"><label>Description (FR)</label><textarea id="fDescFr" rows="2"></textarea></div>
+        <div class="f-field"><label>Description (RW)</label><textarea id="fDescRw" rows="2"></textarea></div>
+        <div class="f-field"><label>Price (USD)</label><input id="fPrice" type="number" step="0.01" min="0" placeholder="299.00"/></div>
+        <div class="f-field"><label>Image upload</label><input id="fImage" type="file" accept="image/*"/></div>
+        <div class="f-field"><label>Or image URL</label><input id="fImageUrl" placeholder="https://..."/></div>
+        <label class="terms-row"><input type="checkbox" id="fFeatured"/> Featured</label>
+        <label class="terms-row"><input type="checkbox" id="fPublished" checked/> Published</label>
+        <div class="admin-form-btns">
+          <button class="btn-full" type="submit">Save project</button>
+          <button type="button" class="btn-login" id="resetFormBtn">Clear form</button>
+        </div>
+      </form>
+    </section>
+    <section class="admin-table-panel">
+      <h2>All projects</h2>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead><tr><th></th><th>Title</th><th>Cat</th><th>Price</th><th>Live</th><th></th></tr></thead>
+          <tbody id="adminTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="js/api.js"></script>
+<script src="js/auth-ui.js"></script>
+<script>
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+function setMsg() {}
+function closeModal() {}
+function showPanel() {}
+function openModal() {}
+</script>
+<script src="js/admin.js"></script>
+</body>
+</html>

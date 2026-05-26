@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="ARCH-AFRICA BUREAU LTD — Premier architectural design, permit-ready drawings, cost estimation, and construction consultancy across Rwanda, Ghana, and Africa since 2012."/>
+<meta name="theme-color" content="#080808"/>
+<meta property="og:title" content="ARCH-AFRICA BUREAU LTD — Architectural Design"/>
+<meta property="og:description" content="Modern, permit-ready architectural designs for African landscapes. Explore designs, estimate costs, and connect with expert architects."/>
+<meta property="og:type" content="website"/>
+<meta property="og:locale" content="en_US"/>
+<link rel="icon" href="assets/arch-africa-logo.jpeg" type="image/jpeg"/>
+<link rel="apple-touch-icon" href="assets/arch-africa-logo.jpeg"/>
+<title>ARCH-AFRICA BUREAU LTD — Architectural Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<div class="util-bar">
+  <div class="util-inner container">
+    <div class="lang-switch">
+      <button type="button" class="lang-btn active" data-lang="en" data-i18n="lang.en">EN</button>
+      <button type="button" class="lang-btn" data-lang="fr" data-i18n="lang.fr">FR</button>
+      <button type="button" class="lang-btn" data-lang="rw" data-i18n="lang.rw">RW</button>
+    </div>
+    <button type="button" id="themeToggle" class="theme-toggle" title="Toggle theme"><span data-theme-icon>☀️</span></button>
+  </div>
+</div>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<div id="loader" aria-hidden="true">
+  <div class="loader-logo">AA</div>
+</div>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curR"></div>
+
+<!-- ════════ NAVBAR ════════ -->
+<header>
+  <nav class="navbar">
+    <!-- Logo -->
+    <a class="nav-logo" href="#home">
+      <img class="nav-logo-mark" src="assets/arch-africa-logo.jpeg" alt="ARCH-AFRICA Bureau Ltd." style="height: 45px; width: auto; object-fit: contain;">
+      <div class="nav-logo-txt">ARCH-AFRICA<span class="nav-logo-sub">Bureau Ltd.</span></div>
+    </a>
+
+    <!-- Center links (desktop) -->
+    <div class="nav-links">
+      <a class="nav-link" href="#home" data-i18n="nav.home">Home</a>
+      <a class="nav-link" href="gallery.html" data-i18n="nav.gallery">Gallery</a>
+
+      <!-- Projects dropdown -->
+      <div class="nav-item">
+        <a class="nav-link" href="#projects">Projects <span class="arr">▾</span></a>
+        <div class="drop">
+          <div class="drop-item has-sub">
+            <span class="di-icon">🏠</span>Residential<span class="di-arrow">▸</span>
+            <div class="sub-drop">
+              <a class="drop-item" href="#projects" data-filter="house"><span class="di-icon">🏡</span>Family Home</a>
+              <a class="drop-item" href="#projects" data-filter="house"><span class="di-icon">🏘️</span>Twin House</a>
+            </div>
+          </div>
+          <div class="drop-divider"></div>
+          <a class="drop-item" href="#projects" data-filter="villa"><span class="di-icon">🏰</span>Commercial</a>
+          <a class="drop-item" href="#projects" data-filter="hotel"><span class="di-icon">🏭</span>Industrial</a>
+          <a class="drop-item" href="#projects" data-filter="all"><span class="di-icon">🏗️</span>Infrastructure</a>
+          <a class="drop-item" href="#projects" data-filter="all"><span class="di-icon">🏛️</span>Institutional</a>
+          <a class="drop-item" href="#projects" data-filter="all"><span class="di-icon">🌿</span>Greenhouse</a>
+        </div>
+      </div>
+
+      <a class="nav-link" href="#services" data-i18n="nav.services">Our Services</a>
+      <a class="nav-link" href="#about" data-i18n="nav.about">About Us</a>
+      <a class="nav-link" href="#faq" data-i18n="nav.faq">FAQ</a>
+      <a class="nav-link" href="#contact" data-i18n="nav.contact">Contact Us</a>
+      <button class="nav-link" onclick="openModal('estimatorModal')" style="cursor:pointer" data-i18n="nav.estimator">Cost Estimator</button>
+      <a class="nav-guide-pill" href="assets/A_guide_for_shopping_at_ARCH-AFRICA_BUREAU_WEBSITE1.pdf" target="_blank" rel="noopener" data-i18n="nav.guide">📄 User Guide ↗</a>
+      <a class="nav-link" href="admin.html" id="adminNavLink" style="display:none" data-i18n="nav.admin">Admin</a>
+    </div>
+
+    <!-- Right actions -->
+    <div class="nav-actions">
+      <button class="nav-icon" id="openSearchBtn" title="Search">🔍</button>
+      <button class="nav-icon" id="openCartBtn" title="Saved Designs">
+        🛒<span class="c-badge" id="cartBadge">0</span>
+      </button>
+      <div class="nav-vr"></div>
+      <!-- Logged out -->
+      <div id="authActions" style="display:flex;align-items:center;gap:.4rem">
+        <button class="btn-login" id="openLoginBtn" data-i18n="nav.login">Login</button>
+      </div>
+      <!-- Logged in -->
+      <div id="userActions" style="display:none" class="user-pill">
+        <div class="user-av" id="userAv">?</div>
+        <span class="user-nm" id="userNm">User</span>
+        <span style="font-size:.55rem;color:var(--muted)">▾</span>
+        <div class="user-drop">
+          <button class="u-dd" onclick="openModal('authModal')">👤 My Profile</button>
+          <button class="u-dd" onclick="openCartDrawer()">🛒 Saved Designs</button>
+          <div style="height:1px;background:var(--border);margin:.3rem .3rem"></div>
+          <button class="u-dd danger" onclick="doLogout()">🚪 Logout</button>
+        </div>
+      </div>
+      <button class="hamburger" id="hamburger">☰</button>
+    </div>
+  </nav>
+
+  <!-- Mobile nav overlay -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="m-close" id="mClose">✕</button>
+    <a class="m-lnk" href="#home" data-i18n="nav.home">Home</a>
+    <a class="m-lnk" href="gallery.html" data-i18n="nav.gallery">Gallery</a>
+    <button class="m-lnk" id="mProjTog">Projects <span>▾</span></button>
+    <div class="m-sub" id="mProjSub">
+      <button class="m-lnk" id="mResTog" style="font-size:.86rem;padding:.5rem 0">🏠 Residential ▸</button>
+      <div class="m-sub-sub" id="mResSub" style="display:none;flex-direction:column">
+        <a class="m-sub-item" href="#projects">🏡 Family Home</a>
+        <a class="m-sub-item" href="#projects">🏘️ Twin House</a>
+      </div>
+      <a class="m-sub-item" href="#projects">🏰 Commercial</a>
+      <a class="m-sub-item" href="#projects">🏭 Industrial</a>
+      <a class="m-sub-item" href="#projects">🏗️ Infrastructure</a>
+      <a class="m-sub-item" href="#projects">🏛️ Institutional</a>
+      <a class="m-sub-item" href="#projects">🌿 Greenhouse</a>
+    </div>
+    <a class="m-lnk" href="#services">Our Services</a>
+    <a class="m-lnk" href="#about">About Us</a>
+    <a class="m-lnk" href="#faq">FAQ</a>
+    <a class="m-lnk" href="#contact">Contact Us</a>
+    <div class="m-actions">
+      <button class="m-btn" onclick="openModal('estimatorModal');closeMNav()">🧮 Estimator</button>
+      <a class="m-btn" href="assets/A_guide_for_shopping_at_ARCH-AFRICA_BUREAU_WEBSITE1.pdf" target="_blank">📄 Guide</a>
+    </div>
+    <div class="m-actions">
+      <button class="m-btn" onclick="showPanel('login');openModal('authModal');closeMNav()">Login</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<!-- ════════ HERO ════════ -->
+<section id="home" class="hero-section">
+  <div class="hero-slides" id="heroSlides">
+    <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&q=80')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1600&q=80')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&q=80')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1600&q=80')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1600&q=80')"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-noise"></div>
+
+  <div class="hero-content">
+    <div class="hero-kicker" data-i18n="hero.kicker">🏗️ &nbsp;ARCH AFRICA — Premier Architectural Solutions</div>
+    <h1 class="hero-h1">
+      <span data-i18n="hero.title1">Building the Future of</span>
+      <span class="hero-morph-line">
+        <span class="morph-word in" id="morphWord">Africa</span>
+      </span>
+    </h1>
+    <p class="hero-sub" data-i18n="hero.sub">Modern, permit-ready architectural designs crafted for African landscapes, communities, and ambitions.</p>
+    <div class="hero-btns">
+      <button class="hero-btn-p" onclick="document.querySelector('#projects').scrollIntoView({behavior:'smooth'})" data-i18n="hero.explore">Explore Designs →</button>
+      <button class="hero-btn-s" onclick="openModal('estimatorModal')" data-i18n="hero.estimate">Get Cost Estimate</button>
+    </div>
+    <div class="hero-counter-wrap">
+      <div class="hero-dots-row" id="heroDots">
+        <button class="hero-dot active" data-i="0"></button>
+        <button class="hero-dot" data-i="1"></button>
+        <button class="hero-dot" data-i="2"></button>
+        <button class="hero-dot" data-i="3"></button>
+        <button class="hero-dot" data-i="4"></button>
+      </div>
+      <span class="hero-dot-num" id="heroNum">01 / 05</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="container stats-grid">
+    <div class="stat-item"><div class="stat-num">12+</div><div class="stat-label">Years of Experience</div></div>
+    <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Projects Delivered</div></div>
+    <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Permit-Ready Designs</div></div>
+    <div class="stat-item"><div class="stat-num">30+</div><div class="stat-label">Expert Architects</div></div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects" class="section">
+  <div class="container">
+    <span class="section-label" data-i18n="projects.label">Our Work</span>
+    <h2 class="section-h2"><span data-i18n="projects.title">Trending Designs</span></h2>
+    <p style="text-align:center;margin-bottom:1.2rem"><a href="gallery.html" class="contact-link" data-i18n="projects.viewGallery">View full gallery →</a></p>
+    <div class="tabs" id="projTabs">
+      <button class="tab active" data-filter="all" data-i18n="projects.all">All</button>
+      <button class="tab" data-filter="house">House</button>
+      <button class="tab" data-filter="villa">Villa</button>
+      <button class="tab" data-filter="hotel">Hotel</button>
+      <button class="tab" data-filter="commercial">Commercial</button>
+    </div>
+    <div class="proj-grid reveal" id="projGrid"></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="section" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="container">
+    <span class="section-label center">What We Offer</span>
+    <h2 class="section-h2 center">Our <span>Services</span></h2>
+    <div class="svc-grid reveal">
+      <div class="svc-card"><div class="svc-icon">📐</div><h3>Architectural Drawings</h3><p>Complete professional plans and design documents tailored to your project needs and local regulations.</p></div>
+      <div class="svc-card"><div class="svc-icon">📋</div><h3>Permit Assistance</h3><p>Drawings structured for smoother construction approval — we understand regulatory requirements across Africa.</p></div>
+      <div class="svc-card"><div class="svc-icon">🏗️</div><h3>Construction Consultancy</h3><p>Technical support from concept to implementation, ensuring quality at every stage of your build.</p></div>
+      <div class="svc-card"><div class="svc-icon">🌿</div><h3>Green Architecture</h3><p>Sustainable and eco-friendly designs that minimise environmental impact while maximising comfort.</p></div>
+      <div class="svc-card"><div class="svc-icon">📊</div><h3>Cost Estimation</h3><p>Accurate material and labour budgeting so you build with confidence and no surprises.</p></div>
+      <div class="svc-card"><div class="svc-icon">🔍</div><h3>Site Analysis</h3><p>Professional topographical surveys and site assessments before breaking ground on your project.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section id="partners" class="partners-section reveal">
+  <div class="container"><p class="p-label">Our Trusted Partners &amp; Collaborators</p></div>
+  <div class="p-wrap">
+    <div class="p-track">
+      <!-- Set 1 -->
+      <div class="p-pill"><span class="p-pill-icon">🛡️</span><span class="p-pill-name">Rwanda National Police</span></div>
+      <div class="p-pill"><span class="p-pill-icon">🎓</span><span class="p-pill-name">Action College</span></div>
+      <div class="p-pill"><span class="p-pill-icon">🏪</span><span class="p-pill-name">Armed Forces Shop</span></div>
+      <div class="p-pill"><span class="p-pill-icon">💳</span><span class="p-pill-name">DPO Pay by Network</span></div>
+      <div class="p-pill"><span class="p-pill-icon">⚙️</span><span class="p-pill-name">Elaf Engineering</span></div>
+      <div class="p-pill"><span class="p-pill-icon">👁️</span><span class="p-pill-name">Gnobone Visions</span></div>
+      <div class="p-pill"><span class="p-pill-icon">🌟</span><span class="p-pill-name">Stafir</span></div>
+      <!-- Set 2 (duplicate for loop) -->
+      <div class="p-pill"><span class="p-pill-icon">🛡️</span><span class="p-pill-name">Rwanda National Police</span></div>
+      <div class="p-pill"><span class="p-pill-icon">🎓</span><span class="p-pill-name">Action College</span></div>
+      <div class="p-pill"><span class="p-pill-icon">🏪</span><span class="p-pill-name">Armed Forces Shop</span></div>
+      <div class="p-pill"><span class="p-pill-icon">💳</span><span class="p-pill-name">DPO Pay by Network</span></div>
+      <div class="p-pill"><span class="p-pill-icon">⚙️</span><span class="p-pill-name">Elaf Engineering</span></div>
+      <div class="p-pill"><span class="p-pill-icon">👁️</span><span class="p-pill-name">Gnobone Visions</span></div>
+      <div class="p-pill"><span class="p-pill-icon">🌟</span><span class="p-pill-name">Stafir</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <span class="section-label">Who We Are</span>
+        <h2 class="section-h2">12 Years of <span>Architectural Excellence</span></h2>
+        <p>ARCH-AFRICA BUREAU LTD is a leading architectural and civil engineering consultancy serving Africa. Since 2012, we have designed and delivered hundreds of permit-ready residential, commercial, and institutional buildings across multiple African nations.</p>
+        <p>Our team of certified architects and engineers combines deep local knowledge with world-class design principles — creating spaces that serve people beautifully for generations.</p>
+        <div class="about-nums">
+          <div class="about-num"><div class="about-num-val">500+</div><div class="about-num-lbl">Completed Projects</div></div>
+          <div class="about-num"><div class="about-num-val">30+</div><div class="about-num-lbl">Expert Architects</div></div>
+          <div class="about-num"><div class="about-num-val">12+</div><div class="about-num-lbl">Years Experience</div></div>
+          <div class="about-num"><div class="about-num-val">100%</div><div class="about-num-lbl">Permit Success</div></div>
+        </div>
+      </div>
+      <div class="about-img-wrap">
+        <div class="about-img-inner" style="background-image:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80');background-size:cover;background-position:center;font-size:0"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section" style="background:var(--bg2);border-top:1px solid var(--border)">
+  <div class="container">
+    <span class="section-label center">Get In Touch</span>
+    <h2 class="section-h2 center">Contact <span>ARCH AFRICA</span></h2>
+    <div class="contact-grid reveal">
+      <div class="contact-card">
+        <div class="contact-icon">📍</div>
+        <h3>Our Location</h3>
+        <p>Kigali, Rwanda<br><span style="font-size:.85rem;opacity:.7">KN 5 Rd, Nyarugenge District</span></p>
+        <a href="https://maps.app.goo.gl/5FWCc74YSLaMn94q8?g_st=ic" target="_blank" rel="noopener" class="contact-link">View on Maps →</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📞</div>
+        <h3>Phone</h3>
+        <p>+250 798 541 111</p>
+        <a href="tel:+250798541111" class="contact-link">Call Us →</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">✉️</div>
+        <h3>Email</h3>
+        <p>info@archafricabureau.com</p>
+        <a href="mailto:info@archafricabureau.com" class="contact-link">Send Email →</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">💬</div>
+        <h3>WhatsApp</h3>
+        <p>Quick support & inquiries</p>
+        <a href="https://wa.link/w72bdf" target="_blank" rel="noopener" class="contact-link">Chat on WhatsApp →</a>
+      </div>
+    </div>
+
+    <!-- Inquiry form -->
+    <div class="inquiry-wrap reveal">
+      <h3 class="inquiry-h3">Send Us a Message</h3>
+      <p class="inquiry-sub">Tell us about your project — we typically respond within 24 hours.</p>
+      <form class="inquiry-form" id="inquiryForm" novalidate>
+        <div class="inquiry-row">
+          <div class="f-field">
+            <label for="inqName">Full Name</label>
+            <input type="text" id="inqName" name="name" required placeholder="Your name" autocomplete="name"/>
+          </div>
+          <div class="f-field">
+            <label for="inqEmail">Email</label>
+            <input type="email" id="inqEmail" name="email" required placeholder="you@example.com" autocomplete="email"/>
+          </div>
+        </div>
+        <div class="inquiry-row">
+          <div class="f-field">
+            <label for="inqPhone">Phone (optional)</label>
+            <input type="tel" id="inqPhone" name="phone" placeholder="+250 …" autocomplete="tel"/>
+          </div>
+          <div class="f-field">
+            <label for="inqType">Project Type</label>
+            <select id="inqType" name="type">
+              <option value="residential">Residential</option>
+              <option value="commercial">Commercial</option>
+              <option value="industrial">Industrial</option>
+              <option value="institutional">Institutional</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="f-field">
+          <label for="inqMsg">Message</label>
+          <textarea id="inqMsg" name="message" rows="4" required placeholder="Describe your plot size, location, timeline, and what you need…"></textarea>
+        </div>
+        <button class="btn-full inquiry-submit" type="submit">Send Inquiry →</button>
+        <p class="inquiry-note" id="inqNote"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="section">
+  <div class="container">
+    <span class="section-label center">Client Stories</span>
+    <h2 class="section-h2 center">What Our <span>Clients Say</span></h2>
+    <div class="testi-grid reveal">
+      <blockquote class="testi-card">
+        <p>“ARCH-AFRICA delivered permit-ready drawings on time. Our family home in Kigali was approved without major revisions.”</p>
+        <footer><strong>Jean-Pierre M.</strong><span>Residential client, Kigali</span></footer>
+      </blockquote>
+      <blockquote class="testi-card">
+        <p>“The cost estimator gave us a realistic budget before we committed. Professional team from concept to construction support.”</p>
+        <footer><strong>Ama Serwaa</strong><span>Commercial project, Accra</span></footer>
+      </blockquote>
+      <blockquote class="testi-card">
+        <p>“We partnered on an institutional build — their local regulatory knowledge made the permit process straightforward.”</p>
+        <footer><strong>Partnership Lead</strong><span>Institutional sector</span></footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="section" style="background:var(--bg2);border-top:1px solid var(--border)">
+  <div class="container">
+    <span class="section-label center">Support</span>
+    <h2 class="section-h2 center">Frequently Asked <span>Questions</span></h2>
+    <div class="faq-list reveal" id="faqList">
+      <details class="faq-item" open>
+        <summary>What is included in a permit-ready design package?</summary>
+        <p>Typically architectural floor plans, elevations, sections, site layout, and documentation aligned with local authority requirements (e.g. Kubaka in Rwanda). Scope varies by project type.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How long does a residential design take?</summary>
+        <p>Standard family homes often take 2–4 weeks after site details are confirmed. Larger or custom projects may take longer — we provide a timeline at consultation.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I use the cost estimator for final budgeting?</summary>
+        <p>The estimator gives a maximum indicative construction budget in RWF based on dimensions you enter. For binding quotes, contact us with your full brief.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Do you work outside Rwanda?</summary>
+        <p>Yes. We serve clients across Africa with offices in Kigali, Rwanda and Accra, Ghana. Remote collaboration and site visits can be arranged.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How do I purchase or license a design from your catalog?</summary>
+        <p>Browse trending designs, save favorites with + Save, then reach out via WhatsApp or the contact form. See our <a href="assets/A_guide_for_shopping_at_ARCH-AFRICA_BUREAU_WEBSITE1.pdf" target="_blank" rel="noopener">shopping guide (PDF)</a> for the full process.</p>
+      </details>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-main">
+    <div class="container footer-grid">
+
+      <!-- Useful Links -->
+      <div class="f-col">
+        <h4>Useful Links</h4>
+        <ul>
+          <li><a href="https://archafricabureau.com/" target="_blank" rel="noopener">Arch-Africa Bureau Ltd.</a></li>
+          <li><a href="https://www.kubaka.gov.rw/" target="_blank" rel="noopener">kubaka.gov.rw</a></li>
+          <li><a href="https://www.ier.rw/" target="_blank" rel="noopener">Institute of Engineers Rwanda</a></li>
+          <li><a href="https://www.ria.rw/" target="_blank" rel="noopener">Rwanda Institute of Architects</a></li>
+          <li><a href="https://www.rha.gov.rw/" target="_blank" rel="noopener">Rwanda Housing Authority</a></li>
+          <li><a href="https://www.visitrwanda.com/" target="_blank" rel="noopener">Visit Rwanda</a></li>
+        </ul>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="f-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="assets/A_guide_for_shopping_at_ARCH-AFRICA_BUREAU_WEBSITE1.pdf" target="_blank" rel="noopener">A guide for shopping</a></li>
+          <li><a href="#about">Know more about us</a></li>
+          <li><a href="#contact">Contact / Staff</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <!-- Browse Projects -->
+      <div class="f-col">
+        <h4>Browse Projects</h4>
+        <ul>
+          <li><a href="#projects">Residential</a></li>
+          <li><a href="#projects">Commercial</a></li>
+          <li><a href="#projects">Industrial</a></li>
+          <li><a href="#projects">Institutional</a></li>
+          <li><a href="#projects">Accessories</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="f-col">
+        <h4>Arch-Africa Bureau Ltd.</h4>
+
+        <div class="footer-contact">
+          <strong>Rwanda:</strong>
+          <p>Location: Kigali-Kicukiro</p>
+          <p>Contact: +250 798 541 111 (Call & WhatsApp)</p>
+        </div>
+
+        <div class="footer-contact" style="margin-top:20px;">
+          <strong>Ghana:</strong>
+          <p>Location: Accra – Teshie rasta road opposite pelican Palace</p>
+          <p>Contact: +233 027 426 8550 (Call & WhatsApp)</p>
+        </div>
+
+        <!-- Social Icons -->
+        <div class="f-socials">
+          <a href="https://wa.link/w72bdf" class="f-social" target="_blank" rel="noopener" title="WhatsApp">💬</a>
+          <a href="mailto:info@archafricabureau.com" class="f-social" title="Email">✉️</a>
+          <a href="tel:+250798541111" class="f-social" title="Call Rwanda">📞</a>
+          <a href="https://archafricabureau.com/" class="f-social" target="_blank" rel="noopener" title="Main site">🌐</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom -->
+  <div class="f-bottom">
+    <div class="container f-bot-row">
+      <p>Copyright ©<span id="year">2026</span> — ARCH-AFRICA BUREAU Ltd. | All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════ SEARCH ════════ -->
+<div class="search-overlay" id="searchOv">
+  <button class="s-close" id="sClose">✕</button>
+  <div class="search-box">
+    <span style="color:var(--y)">🔍</span>
+    <input type="text" id="sInput" placeholder="Search designs, services, projects…" autocomplete="off"/>
+  </div>
+  <div class="s-results" id="sResults"></div>
+  <p style="color:var(--muted);font-size:.82rem;margin-top:.7rem">Try "villa", "hotel", "permit", "consultancy"…</p>
+</div>
+
+<!-- ════════ CART ════════ -->
+<div class="cart-ov" id="cartOv"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-hdr"><h3>Saved Designs</h3><button class="cart-x" id="cartX">✕</button></div>
+  <div class="cart-body" id="cartBody"><div class="cart-empty"><span>🛒</span>No designs saved yet.<br>Browse projects and click + to save.</div></div>
+  <div class="cart-ftr">
+    <button class="btn-full" type="button" onclick="checkoutCart()" data-i18n="cart.checkout">Checkout with Stripe →</button>
+    <button class="btn-full" type="button" style="margin-top:.5rem;background:transparent;border:1px solid var(--border2);color:var(--text);box-shadow:none" onclick="closeCart();openModal('estimatorModal')">Get Cost Estimate</button>
+  </div>
+</div>
+
+<!-- ════════ AUTH MODAL ════════ -->
+<div class="backdrop" id="authModal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('authModal')">✕</button>
+    <div class="auth-logo-block">
+      <div class="auth-logo-mark">AA</div>
+      <h2 class="auth-h2" id="authH2">Welcome Back</h2>
+      <p class="auth-sub" id="authSub">Sign in to your ARCH-AFRICA account.</p>
+    </div>
+    <div class="auth-tabs" id="authTabs">
+      <button class="a-tab active" id="aTabLogin">Login</button>
+      <button class="a-tab" id="aTabReg">Register</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div class="auth-panel active" id="pLogin">
+      <div class="f-field"><label>Email</label><input type="email" id="lEmail" placeholder="you@example.com"/></div>
+      <div class="f-field"><label>Password</label><input type="password" id="lPw" placeholder="Your password"/></div>
+      <div class="f-row">
+        <label class="rem"><input type="checkbox" id="remMe"/> Remember me</label>
+        <button class="a-link" onclick="showPanel('forgot')">Forgot password?</button>
+      </div>
+      <button class="btn-full" onclick="doLogin()">Login →</button>
+      <div class="oauth-sep"><span>or continue with</span></div>
+      <button class="oauth-b" onclick="oauthNote('lMsg')">🔵 Continue with Google</button>
+      <button class="oauth-b" onclick="oauthNote('lMsg')">🍎 Continue with Apple</button>
+      <p class="auth-msg" id="lMsg"></p>
+      <p class="sw-line">No account? <button class="sw-btn" onclick="showPanel('register')">Register now</button></p>
+    </div>
+
+    <!-- REGISTER -->
+    <div class="auth-panel" id="pReg">
+      <div class="f-field"><label>Full Name</label><input type="text" id="rName" placeholder="Your full name"/></div>
+      <div class="f-field"><label>Email</label><input type="email" id="rEmail" placeholder="you@example.com"/></div>
+      <div class="f-field"><label>Password</label><input type="password" id="rPw" placeholder="Min. 8 characters"/></div>
+      <div class="f-field"><label>Confirm Password</label><input type="password" id="rPwC" placeholder="Repeat password"/></div>
+      <label class="terms-row"><input type="checkbox" id="rTerms"/>I agree to the <a href="#" style="color:var(--y)">Terms</a> &amp; <a href="#" style="color:var(--y)">Privacy Policy</a></label>
+      <button class="btn-full" onclick="doRegister()">Create Account →</button>
+      <div class="oauth-sep"><span>or sign up with</span></div>
+      <button class="oauth-b" onclick="oauthNote('rMsg')">🔵 Sign up with Google</button>
+      <button class="oauth-b" onclick="oauthNote('rMsg')">🍎 Sign up with Apple</button>
+      <p class="auth-msg" id="rMsg"></p>
+      <p class="sw-line">Have an account? <button class="sw-btn" onclick="showPanel('login')">Login here</button></p>
+    </div>
+
+    <!-- FORGOT PASSWORD -->
+    <div class="auth-panel" id="pForgot">
+      <div class="f-step active" id="fs1">
+        <button class="back-btn" onclick="showPanel('login')">← Back to Login</button>
+        <div class="f-field"><label>Registered email</label><input type="email" id="fEm" placeholder="you@example.com"/></div>
+        <button class="btn-full" onclick="fStep1()">Continue →</button>
+        <p class="auth-msg" id="fm1"></p>
+      </div>
+      <div class="f-step" id="fs2">
+        <p style="font-size:.84rem;color:var(--muted);line-height:1.6">✅ Email verified. Set your new password below.</p>
+        <div class="f-field"><label>New Password</label><input type="password" id="fPw" placeholder="Min. 8 characters"/></div>
+        <div class="f-field"><label>Confirm New Password</label><input type="password" id="fPwC" placeholder="Repeat password"/></div>
+        <button class="btn-full" onclick="fStep2()">Reset Password →</button>
+        <p class="auth-msg" id="fm2"></p>
+      </div>
+      <div class="f-step" id="fs3">
+        <div class="success-icon">🎉</div>
+        <p style="text-align:center;color:var(--muted);font-size:.88rem;line-height:1.7">Password reset successfully! You can now log in with your new password.</p>
+        <button class="btn-full" onclick="showPanel('login')">Back to Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ ESTIMATOR ════════ -->
+<div class="backdrop" id="estimatorModal">
+  <div class="est-dialog">
+    <button class="modal-close" onclick="closeModal('estimatorModal')">✕</button>
+    <div class="est-wrap">
+      <p class="est-intro">Enter the required dimensions and our system will provide you with a maximum estimated construction budget in RWF.</p>
+      <h2 class="est-h2">Building Cost Estimator</h2>
+      <form class="est-form" onsubmit="calcCost(event)">
+        <fieldset class="est-fs">
+          <legend>Plot Size</legend>
+          <input type="number" min="0" step="0.1" id="pL" placeholder="Plot Length (m)"/>
+          <input type="number" min="0" step="0.1" id="pW" placeholder="Plot Width (m)"/>
+        </fieldset>
+        <fieldset class="est-fs">
+          <legend>House Size &amp; Floors</legend>
+          <input type="number" min="0" step="0.1" id="hL" placeholder="House Length (m)" required/>
+          <input type="number" min="0" step="0.1" id="hW" placeholder="House Width (m)" required/>
+          <label>Floor Levels</label>
+          <select id="floorSel"><option value="1">Grounded (G)</option><option value="2">G+1</option><option value="3">G+2</option></select>
+        </fieldset>
+        <fieldset class="est-fs">
+          <legend>Living Room</legend>
+          <input type="number" min="0" step="0.1" id="liL" placeholder="Length (m)"/><input type="number" min="0" step="0.1" id="liW" placeholder="Width (m)"/>
+          <legend class="sub-l">Dining Room</legend>
+          <input type="number" min="0" step="0.1" id="diL" placeholder="Length (m)"/><input type="number" min="0" step="0.1" id="diW" placeholder="Width (m)"/>
+          <legend class="sub-l">Kitchen</legend>
+          <input type="number" min="0" step="0.1" id="kiL" placeholder="Length (m)"/><input type="number" min="0" step="0.1" id="kiW" placeholder="Width (m)"/>
+        </fieldset>
+        <fieldset class="est-fs">
+          <legend>Bedrooms</legend>
+          <input type="number" min="0" max="10" id="bCount" placeholder="Total bedrooms"/>
+          <legend class="sub-l">Master</legend>
+          <input type="number" min="0" step="0.1" id="maL" placeholder="Length (m)"/><input type="number" min="0" step="0.1" id="maW" placeholder="Width (m)"/>
+          <legend class="sub-l">Bedroom 1</legend>
+          <input type="number" min="0" step="0.1" id="b1L" placeholder="Length (m)"/><input type="number" min="0" step="0.1" id="b1W" placeholder="Width (m)"/>
+          <legend class="sub-l">Bedroom 2</legend>
+          <input type="number" min="0" step="0.1" id="b2L" placeholder="Length (m)"/><input type="number" min="0" step="0.1" id="b2W" placeholder="Width (m)"/>
+          <legend class="sub-l">Bedroom 3</legend>
+          <input type="number" min="0" step="0.1" id="b3L" placeholder="Length (m)"/><input type="number" min="0" step="0.1" id="b3W" placeholder="Width (m)"/>
+        </fieldset>
+        <fieldset class="est-fs">
+          <legend>Annex</legend>
+          <input type="number" min="0" step="0.1" id="anL" placeholder="Length (m)"/><input type="number" min="0" step="0.1" id="anW" placeholder="Width (m)"/>
+          <legend class="sub-l">Fence</legend>
+          <input type="number" min="0" step="0.1" id="feL" placeholder="Length (m)"/><input type="number" min="0" step="0.1" id="feW" placeholder="Width (m)"/>
+          <legend class="sub-l">External Works</legend>
+          <input type="number" min="0" step="0.1" id="exL" placeholder="Length (m)"/><input type="number" min="0" step="0.1" id="exW" placeholder="Width (m)"/>
+        </fieldset>
+        <div style="display:flex;justify-content:center"><button class="btn-full" type="submit" style="max-width:260px">Calculate Total Cost</button></div>
+        <p class="est-total" id="estRes">Total Estimated Cost: 0 RWF</p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ 1-MIN POPUP ════════ -->
+<div class="popup-backdrop" id="popupBd">
+  <div class="popup-card">
+    <button class="popup-close" onclick="closePopup()">✕</button>
+    <span class="popup-emoji">👋</span>
+    <h2 class="popup-title">Thank you for visiting ARCH AFRICA!</h2>
+    <div class="popup-body">
+      <p>The home of Consultancy Services for Architectural and Engineering Details.</p>
+      <br/>
+      <p>Feel free to reach out to us directly on <a href="https://wa.link/w72bdf" target="_blank" rel="noopener">WhatsApp</a> for quick support and inquiries.</p>
+      <br/>
+      <p>If you're a certified architect and feel confident in your work, we welcome you to <a href="https://archafricabureau.com/my-account/" target="_blank" rel="noopener">register</a> on our platform and showcase your designs.</p>
+      <br/>
+      <p><strong style="color:var(--white)">Sell your products and join a network of talented professionals today!</strong></p>
+    </div>
+    <div class="popup-btns">
+      <a class="popup-btn-wa" href="https://wa.link/w72bdf" target="_blank" rel="noopener">
+        💬 &nbsp;Chat on WhatsApp
+      </a>
+      <a class="popup-btn-reg" href="https://archafricabureau.com/my-account/" target="_blank" rel="noopener">
+        ✍️ &nbsp;Register as Architect
+      </a>
+    </div>
+    <button class="popup-skip" onclick="closePopup()">Maybe later ×</button>
+  </div>
+</div>
+
+<button type="button" class="back-top" id="backTop" aria-label="Back to top" title="Back to top">↑</button>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- JavaScript -->
+<script src="js/api.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/auth-ui.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/projects.js"></script>
+<script src="js/chat.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

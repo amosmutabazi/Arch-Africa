@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="ARCH-AFRICA project gallery — browse and purchase architectural designs."/>
+<meta name="theme-color" content="#080808"/>
+<link rel="icon" href="assets/arch-africa-logo.jpeg" type="image/jpeg"/>
+<link rel="apple-touch-icon" href="assets/arch-africa-logo.jpeg"/>
+<title>Project Gallery — ARCH-AFRICA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+<div class="util-bar">
+  <div class="util-inner container">
+    <div class="lang-switch">
+      <button type="button" class="lang-btn active" data-lang="en">EN</button>
+      <button type="button" class="lang-btn" data-lang="fr">FR</button>
+      <button type="button" class="lang-btn" data-lang="rw">RW</button>
+    </div>
+    <button type="button" id="themeToggle" class="theme-toggle" title="Toggle theme"><span data-theme-icon>☀️</span></button>
+  </div>
+</div>
+
+<header>
+  <nav class="navbar">
+    <a class="nav-logo" href="index.html">
+      <img class="nav-logo-mark" src="assets/arch-africa-logo.jpeg" alt="ARCH-AFRICA Bureau Ltd." style="height: 45px; width: auto; object-fit: contain;">
+      <div class="nav-logo-txt">ARCH-AFRICA<span class="nav-logo-sub">Bureau Ltd.</span></div>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="index.html" data-i18n="nav.home">Home</a>
+      <a class="nav-link active" href="gallery.html" data-i18n="nav.gallery">Gallery</a>
+      <a class="nav-link" href="index.html#contact" data-i18n="nav.contact">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-icon" id="openCartBtn" title="Saved">🛒<span class="c-badge" id="cartBadge">0</span></button>
+      <a class="nav-link" href="admin.html" id="adminNavLink" style="display:none" data-i18n="nav.admin">Admin</a>
+    </div>
+  </nav>
+</header>
+
+<main class="gallery-page section" style="padding-top:calc(var(--nav-h) + 4rem)">
+  <div class="container">
+    <span class="section-label center" data-i18n="projects.label">Our Work</span>
+    <h1 class="section-h2 center" data-i18n="gallery.title">Project Gallery</h1>
+    <p class="gallery-intro center" data-i18n="gallery.sub">Browse our full catalog.</p>
+    <div class="tabs" id="galleryTabs">
+      <button class="tab active" data-filter="all" data-i18n="projects.all">All</button>
+      <button class="tab" data-filter="house">House</button>
+      <button class="tab" data-filter="villa">Villa</button>
+      <button class="tab" data-filter="hotel">Hotel</button>
+      <button class="tab" data-filter="commercial">Commercial</button>
+      <button class="tab" data-filter="industrial">Industrial</button>
+      <button class="tab" data-filter="institutional">Institutional</button>
+      <button class="tab" data-filter="greenhouse">Greenhouse</button>
+    </div>
+    <div class="proj-grid gallery-grid" id="galleryGrid"></div>
+  </div>
+</main>
+
+<div class="cart-ov" id="cartOv"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-hdr"><h3 data-i18n="cart.title">Saved Designs</h3><button class="cart-x" id="cartX">✕</button></div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-ftr">
+    <button class="btn-full" type="button" onclick="checkoutCart()" data-i18n="cart.checkout">Checkout with Stripe →</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="js/api.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/projects.js"></script>
+<script src="js/chat.js"></script>
+<script>
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+</script>
+<script src="js/gallery-page.js"></script>
+</body>
+</html>
