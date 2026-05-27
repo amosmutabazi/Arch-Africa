@@ -17,15 +17,18 @@
     },
     {
       "src": "/uploads/(.*)",
-      "dest": "uploads/$1"
+      "dest": "server/index.js"
+    },
+    {
+      "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
+      "dest": "/public/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/$1"
+      "dest": "server/index.js"
     }
   ],
   "env": {
-    "NODE_ENV": "production",
-    "PORT": "3000"
+    "NODE_ENV": "production"
   }
 }
