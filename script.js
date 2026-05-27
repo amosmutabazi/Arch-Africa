@@ -33,13 +33,14 @@ function openModal(id) {
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
   document.documentElement.style.overflow = 'hidden';
-  window.scrollTo(0, 0);
 }
 function closeModal(id) {
   const modal = document.getElementById(id);
   modal.classList.remove('open');
-  document.body.style.overflow = '';
-  document.documentElement.style.overflow = '';
+  if (!document.getElementById('mobileNav')?.classList.contains('open')) {
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+  }
 }
 ['authModal', 'estimatorModal'].forEach((id) => {
   document.getElementById(id)?.addEventListener('click', (e) => {
@@ -76,13 +77,9 @@ document.getElementById('openLoginBtn')?.addEventListener('click', () => {
   openModal('authModal');
 });
 
-function oauthNote(id) {
-  setMsg(id, 'OAuth integration coming soon.', 'ok');
-}
-
 /* ── Dynamic projects (CMS) ── */
 document.addEventListener('DOMContentLoaded', () => {
-  loadProjectsInto('projGrid', { limit: 4, showBuy: true }).then(() => {
+  loadProjectsInto('projGrid', { limit: 12, showBuy: true }).then(() => {
     document.getElementById('projTabs')?.addEventListener('click', (e) => {
       const btn = e.target.closest('.tab');
       if (!btn) return;
@@ -96,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.addEventListener('langchange', () => {
-    loadProjectsInto('projGrid', { limit: 4, showBuy: true });
+    loadProjectsInto('projGrid', { limit: 12, showBuy: true });
   });
 });
 

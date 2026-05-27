@@ -1,0 +1,11 @@
+node_modules
+.git
+.env.example
+README.md
+*.md
+.vscode
+uploads/*
+data/*.db
+.DS_Store
+PROJECT_DOCUMENTATION.md
+QUICK_REFERENCE.md

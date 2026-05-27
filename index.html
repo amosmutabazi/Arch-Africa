@@ -52,7 +52,6 @@
     <!-- Center links (desktop) -->
     <div class="nav-links">
       <a class="nav-link" href="#home" data-i18n="nav.home">Home</a>
-      <a class="nav-link" href="gallery.html" data-i18n="nav.gallery">Gallery</a>
 
       <!-- Projects dropdown -->
       <div class="nav-item">
@@ -76,7 +75,6 @@
 
       <a class="nav-link" href="#services" data-i18n="nav.services">Our Services</a>
       <a class="nav-link" href="#about" data-i18n="nav.about">About Us</a>
-      <a class="nav-link" href="#faq" data-i18n="nav.faq">FAQ</a>
       <a class="nav-link" href="#contact" data-i18n="nav.contact">Contact Us</a>
       <button class="nav-link" onclick="openModal('estimatorModal')" style="cursor:pointer" data-i18n="nav.estimator">Cost Estimator</button>
       <a class="nav-guide-pill" href="assets/A_guide_for_shopping_at_ARCH-AFRICA_BUREAU_WEBSITE1.pdf" target="_blank" rel="noopener" data-i18n="nav.guide">📄 User Guide ↗</a>
@@ -89,7 +87,6 @@
       <button class="nav-icon" id="openCartBtn" title="Saved Designs">
         🛒<span class="c-badge" id="cartBadge">0</span>
       </button>
-      <a class="nav-link" href="admin.html" id="adminNavLink" style="display:none" data-i18n="nav.admin">Admin</a>
 
       <!-- Login button (when logged out) -->
       <button class="btn-login" id="openLoginBtn" data-i18n="nav.login">Login</button>
@@ -115,7 +112,6 @@
   <div class="mobile-nav" id="mobileNav">
     <button class="m-close" id="mClose">✕</button>
     <a class="m-lnk" href="#home" data-i18n="nav.home">Home</a>
-    <a class="m-lnk" href="gallery.html" data-i18n="nav.gallery">Gallery</a>
     <button class="m-lnk" id="mProjTog">Projects <span>▾</span></button>
     <div class="m-sub" id="mProjSub">
       <button class="m-lnk" id="mResTog" style="font-size:.86rem;padding:.5rem 0">🏠 Residential ▸</button>
@@ -131,14 +127,13 @@
     </div>
     <a class="m-lnk" href="#services">Our Services</a>
     <a class="m-lnk" href="#about">About Us</a>
-    <a class="m-lnk" href="#faq">FAQ</a>
     <a class="m-lnk" href="#contact">Contact Us</a>
     <div class="m-actions">
       <button class="m-btn" onclick="openModal('estimatorModal');closeMNav()">🧮 Estimator</button>
       <a class="m-btn" href="assets/A_guide_for_shopping_at_ARCH-AFRICA_BUREAU_WEBSITE1.pdf" target="_blank">📄 Guide</a>
     </div>
     <div class="m-actions">
-      <button class="m-btn" onclick="showPanel('login');openModal('authModal');closeMNav()">Login</button>
+      <button class="m-btn" onclick="showPanel('login');closeMNav();openModal('authModal')">Login</button>
     </div>
   </div>
 </header>
@@ -535,18 +530,6 @@
         <button class="a-link" onclick="showPanel('forgot')">Forgot password?</button>
       </div>
       <button class="btn-full" onclick="doLogin()">Login →</button>
-      <div class="oauth-sep"><span>or continue with</span></div>
-      <button class="oauth-b oauth-google" onclick="oauthNote('lMsg')">
-        <span class="oauth-ic" aria-hidden="true">
-          <svg viewBox="0 0 48 48" width="18" height="18" focusable="false" aria-hidden="true">
-            <path fill="#EA4335" d="M24 9.5c3.54 0 6.2 1.54 7.62 2.83l5.2-5.2C33.6 4.07 29.26 2 24 2 14.63 2 6.51 7.38 2.56 15.2l6.92 5.37C11.26 14.71 17.17 9.5 24 9.5z"/>
-            <path fill="#4285F4" d="M46.1 24.5c0-1.57-.14-2.77-.44-4.02H24v7.63h12.63c-.25 2-.95 5-3.51 7.03l5.88 4.56c3.5-3.23 7.1-7.99 7.1-15.2z"/>
-            <path fill="#FBBC05" d="M9.48 28.57a14.62 14.62 0 0 1-.77-4.57c0-1.6.27-3.14.75-4.57l-6.92-5.37A23.98 23.98 0 0 0 0 24c0 3.88.93 7.54 2.56 10.8l6.92-5.23z"/>
-            <path fill="#34A853" d="M24 46c6.48 0 11.92-2.14 15.9-5.83l-5.88-4.56c-1.57 1.1-4.4 2.37-9.92 2.37-6.8 0-12.7-5.19-14.49-12.18l-6.92 5.23C6.51 40.62 14.63 46 24 46z"/>
-          </svg>
-        </span>
-        Continue with Google
-      </button>
       <p class="auth-msg" id="lMsg"></p>
       <p class="sw-line">No account? <button class="sw-btn" onclick="showPanel('register')">Register now</button></p>
     </div>
@@ -559,18 +542,6 @@
       <div class="f-field"><label>Confirm Password</label><input type="password" id="rPwC" placeholder="Repeat password"/></div>
       <label class="terms-row"><input type="checkbox" id="rTerms"/>I agree to the <a href="#" style="color:var(--y)">Terms</a> &amp; <a href="#" style="color:var(--y)">Privacy Policy</a></label>
       <button class="btn-full" onclick="doRegister()">Create Account →</button>
-      <div class="oauth-sep"><span>or sign up with</span></div>
-      <button class="oauth-b oauth-google" onclick="oauthNote('rMsg')">
-        <span class="oauth-ic" aria-hidden="true">
-          <svg viewBox="0 0 48 48" width="18" height="18" focusable="false" aria-hidden="true">
-            <path fill="#EA4335" d="M24 9.5c3.54 0 6.2 1.54 7.62 2.83l5.2-5.2C33.6 4.07 29.26 2 24 2 14.63 2 6.51 7.38 2.56 15.2l6.92 5.37C11.26 14.71 17.17 9.5 24 9.5z"/>
-            <path fill="#4285F4" d="M46.1 24.5c0-1.57-.14-2.77-.44-4.02H24v7.63h12.63c-.25 2-.95 5-3.51 7.03l5.88 4.56c3.5-3.23 7.1-7.99 7.1-15.2z"/>
-            <path fill="#FBBC05" d="M9.48 28.57a14.62 14.62 0 0 1-.77-4.57c0-1.6.27-3.14.75-4.57l-6.92-5.37A23.98 23.98 0 0 0 0 24c0 3.88.93 7.54 2.56 10.8l6.92-5.23z"/>
-            <path fill="#34A853" d="M24 46c6.48 0 11.92-2.14 15.9-5.83l-5.88-4.56c-1.57 1.1-4.4 2.37-9.92 2.37-6.8 0-12.7-5.19-14.49-12.18l-6.92 5.23C6.51 40.62 14.63 46 24 46z"/>
-          </svg>
-        </span>
-        Sign up with Google
-      </button>
       <p class="auth-msg" id="rMsg"></p>
       <p class="sw-line">Have an account? <button class="sw-btn" onclick="showPanel('login')">Login here</button></p>
     </div>

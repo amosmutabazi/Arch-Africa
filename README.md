@@ -44,7 +44,7 @@ Prices on projects are stored in **USD cents** (e.g. `29900` = $299.00).
 
 - Set strong `JWT_SECRET` and change admin password  
 - Use PostgreSQL instead of SQLite for scale (optional migration)  
-- Configure real SMTP for password reset emails  
+- Configure real SMTP for password reset emails (`EMAIL_USER`, `EMAIL_PASSWORD`, and `EMAIL_SERVICE` or `EMAIL_HOST`/`EMAIL_PORT`)  
 - Add your Tawk.to property ID  
 - Deploy behind HTTPS with `SITE_URL` set to your domain  
 - Replace Unsplash seed images with real project photos via Admin  

@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 const db = require('../db');
 const { authRequired } = require('../middleware/auth');
 
@@ -10,6 +11,37 @@ const router = express.Router();
 const JWT_SECRET =
   process.env.JWT_SECRET ||
   (process.env.NODE_ENV === 'production' ? '' : 'dev-jwt-secret-change-me');
+
+const emailEnabled = Boolean(
+  process.env.EMAIL_USER &&
+    process.env.EMAIL_PASSWORD &&
+    (process.env.EMAIL_SERVICE || process.env.EMAIL_HOST)
+);
+
+const emailTransportOptions = process.env.EMAIL_SERVICE
+  ? {
+      service: process.env.EMAIL_SERVICE,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    }
+  : process.env.EMAIL_HOST
+  ? {
+      host: process.env.EMAIL_HOST,
+      port: Number(process.env.EMAIL_PORT || 587),
+      secure: process.env.EMAIL_SECURE === 'true',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    }
+  : null;
+
+const emailTransporter = emailEnabled
+  ? nodemailer.createTransport(emailTransportOptions)
+  : null;
+const emailFrom = process.env.EMAIL_FROM || process.env.EMAIL_USER || 'no-reply@archafricabureau.com';
 
 function signToken(user) {
   if (!JWT_SECRET) {
@@ -67,13 +99,15 @@ router.get('/me', authRequired, (req, res) => {
   res.json({ user: publicUser(user) });
 });
 
-router.post('/forgot-password', (req, res) => {
+router.post('/forgot-password', async (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ error: 'Email required' });
-  const user = db.prepare('SELECT id FROM users WHERE email = ?').get(email.trim().toLowerCase());
+  const normalizedEmail = email.trim().toLowerCase();
+  const user = db.prepare('SELECT id FROM users WHERE email = ?').get(normalizedEmail);
   if (!user) {
     return res.json({ message: 'If that email exists, a reset link has been sent.' });
   }
+
   const token = crypto.randomBytes(32).toString('hex');
   const expires = new Date(Date.now() + 3600000).toISOString();
   db.prepare('INSERT INTO password_resets (user_id, token, expires_at) VALUES (?, ?, ?)').run(
@@ -81,10 +115,35 @@ router.post('/forgot-password', (req, res) => {
     token,
     expires
   );
+
   const resetUrl = `${process.env.SITE_URL}/reset-password.html?token=${token}`;
-  if (process.env.NODE_ENV === 'development') {
+
+  if (emailTransporter) {
+    try {
+      await emailTransporter.sendMail({
+        from: emailFrom,
+        to: normalizedEmail,
+        subject: 'Reset your password',
+        html: `
+          <p>Hi,</p>
+          <p>You requested a password reset for your Arch Africa Bureau account.</p>
+          <p><a href="${resetUrl}">Click here to reset your password</a></p>
+          <p>If you did not request this, you can ignore this email.</p>
+        `,
+      });
+    } catch (error) {
+      console.error('Password reset email failed:', error);
+    }
+  }
+
+  if (process.env.NODE_ENV === 'development' && !emailTransporter) {
     return res.json({ message: 'Reset link created (dev only)', resetUrl });
   }
+
+  if (!emailTransporter && process.env.NODE_ENV !== 'development') {
+    console.warn('⚠ Password reset email not configured. Set EMAIL_USER, EMAIL_PASSWORD, and EMAIL_SERVICE or EMAIL_HOST.');
+  }
+
   res.json({ message: 'If that email exists, a reset link has been sent.' });
 });
 

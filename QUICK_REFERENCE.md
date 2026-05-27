@@ -348,7 +348,7 @@ Redirect to checkout-success.html
 - [ ] Update `SITE_URL` to production domain
 - [ ] Get real Stripe keys (not test keys)
 - [ ] Set `NODE_ENV=production`
-- [ ] Implement email sending for password resets
+- [ ] Configure email sending for password resets
 - [ ] Set up HTTPS
 - [ ] Add rate limiting to auth endpoints
 - [ ] Backup database regularly

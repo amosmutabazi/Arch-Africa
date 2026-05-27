@@ -35,15 +35,26 @@ async function loadAdminProjects() {
   const tbody = document.getElementById('adminTableBody');
   try {
     const { projects } = await API.projects.adminList();
+    const published = projects.filter((p) => p.published).length;
+    const drafts = projects.length - published;
+    document.getElementById('projectCount').textContent = projects.length;
+    document.getElementById('publishedCount').textContent = published;
+    document.getElementById('draftCount').textContent = drafts;
+
+    if (!projects.length) {
+      tbody.innerHTML = `<tr><td colspan="6">No projects found. Add a new design using the form.</td></tr>`;
+      return;
+    }
+
     tbody.innerHTML = projects
       .map(
         (p) => `
       <tr>
-        <td><img src="${p.image_url}" alt="" class="admin-thumb"/></td>
+        <td><img src="${p.image_url}" alt="${p.title_en}" class="admin-thumb"/></td>
         <td>${p.title_en}</td>
         <td>${p.category}</td>
         <td>${formatPrice(p.price_cents, p.currency)}</td>
-        <td>${p.published ? '✓' : '—'}</td>
+        <td>${p.published ? 'Published' : 'Draft'}</td>
         <td>
           <button type="button" class="admin-sm" data-edit="${p.id}">Edit</button>
           <button type="button" class="admin-sm danger" data-del="${p.id}">Delete</button>

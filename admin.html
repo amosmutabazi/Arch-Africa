@@ -25,47 +25,102 @@
 
 <div id="adminApp" style="display:none">
   <header class="admin-hdr">
-    <a href="index.html" class="nav-logo"><img class="nav-logo-mark" src="assets/arch-africa-logo.png" alt="ARCH-AFRICA" style="height: 40px; width: auto; object-fit: contain;"><span class="nav-logo-txt">CMS</span></a>
+    <div class="admin-hdr-brand">
+      <a href="index.html" class="nav-logo"><img class="nav-logo-mark" src="assets/arch-africa-logo.png" alt="ARCH-AFRICA" style="height: 40px; width: auto; object-fit: contain;"><span class="nav-logo-txt">CMS</span></a>
+      <div class="admin-hdr-info">
+        <p class="admin-hdr-tag">Project management dashboard</p>
+        <strong>Manage your designs, images, and publishing status in one place.</strong>
+      </div>
+    </div>
     <button type="button" class="btn-login" onclick="doLogout();location.reload()">Logout</button>
   </header>
+
+  <div class="admin-intro container">
+    <div>
+      <h1>Admin CMS</h1>
+      <p class="admin-lead">Add a new project, upload an image, or edit existing designs. Use the table to quickly update published listings.</p>
+    </div>
+    <div class="admin-summary">
+      <div class="admin-summary-card">
+        <span>Total designs</span>
+        <strong id="projectCount">0</strong>
+      </div>
+      <div class="admin-summary-card">
+        <span>Published</span>
+        <strong id="publishedCount">0</strong>
+      </div>
+      <div class="admin-summary-card">
+        <span>Drafts</span>
+        <strong id="draftCount">0</strong>
+      </div>
+    </div>
+  </div>
+
   <div class="admin-layout container">
     <section class="admin-form-panel">
-      <h2 id="formTitle">Add new project</h2>
+      <div class="admin-panel-head">
+        <h2 id="formTitle">Add new project</h2>
+        <p class="admin-panel-subtitle">Fill in the fields below and save your design.</p>
+      </div>
       <form id="projectForm" enctype="multipart/form-data">
-        <div class="f-field"><label>Slug</label><input id="fSlug" placeholder="my-project-name"/></div>
-        <div class="f-field"><label>Category</label>
-          <select id="fCategory">
-            <option value="house">house</option>
-            <option value="villa">villa</option>
-            <option value="hotel">hotel</option>
-            <option value="commercial">commercial</option>
-            <option value="industrial">industrial</option>
-            <option value="institutional">institutional</option>
-            <option value="greenhouse">greenhouse</option>
-          </select>
+        <div class="admin-row">
+          <div class="f-field"><label>Slug</label><input id="fSlug" placeholder="my-project-name"/></div>
+          <div class="f-field"><label>Category</label>
+            <select id="fCategory">
+              <option value="house">house</option>
+              <option value="villa">villa</option>
+              <option value="hotel">hotel</option>
+              <option value="commercial">commercial</option>
+              <option value="industrial">industrial</option>
+              <option value="institutional">institutional</option>
+              <option value="greenhouse">greenhouse</option>
+            </select>
+          </div>
         </div>
-        <div class="f-field"><label>Title (EN) *</label><input id="fTitleEn" required/></div>
-        <div class="f-field"><label>Title (FR)</label><input id="fTitleFr"/></div>
-        <div class="f-field"><label>Title (RW)</label><input id="fTitleRw"/></div>
+
+        <div class="admin-row">
+          <div class="f-field"><label>Title (EN) *</label><input id="fTitleEn" required/></div>
+          <div class="f-field"><label>Price (USD)</label><input id="fPrice" type="number" step="0.01" min="0" placeholder="299.00"/></div>
+        </div>
+
+        <div class="admin-row">
+          <div class="f-field"><label>Title (FR)</label><input id="fTitleFr"/></div>
+          <div class="f-field"><label>Title (RW)</label><input id="fTitleRw"/></div>
+        </div>
+
         <div class="f-field"><label>Description (EN) *</label><textarea id="fDescEn" rows="3" required></textarea></div>
-        <div class="f-field"><label>Description (FR)</label><textarea id="fDescFr" rows="2"></textarea></div>
-        <div class="f-field"><label>Description (RW)</label><textarea id="fDescRw" rows="2"></textarea></div>
-        <div class="f-field"><label>Price (USD)</label><input id="fPrice" type="number" step="0.01" min="0" placeholder="299.00"/></div>
-        <div class="f-field"><label>Image upload</label><input id="fImage" type="file" accept="image/*"/></div>
-        <div class="f-field"><label>Or image URL</label><input id="fImageUrl" placeholder="https://..."/></div>
-        <label class="terms-row"><input type="checkbox" id="fFeatured"/> Featured</label>
-        <label class="terms-row"><input type="checkbox" id="fPublished" checked/> Published</label>
+        <div class="admin-row">
+          <div class="f-field"><label>Description (FR)</label><textarea id="fDescFr" rows="2"></textarea></div>
+          <div class="f-field"><label>Description (RW)</label><textarea id="fDescRw" rows="2"></textarea></div>
+        </div>
+
+        <div class="admin-row">
+          <div class="f-field"><label>Image upload</label><input id="fImage" type="file" accept="image/*"/></div>
+          <div class="f-field"><label>Or image URL</label><input id="fImageUrl" placeholder="https://..."/></div>
+        </div>
+
+        <p class="admin-note">Upload an image to keep the best quality. If both file and URL are provided, the uploaded file is used.</p>
+
+        <div class="admin-checkbox-row">
+          <label class="terms-row"><input type="checkbox" id="fFeatured"/> Featured</label>
+          <label class="terms-row"><input type="checkbox" id="fPublished" checked/> Published</label>
+        </div>
+
         <div class="admin-form-btns">
           <button class="btn-full" type="submit">Save project</button>
           <button type="button" class="btn-login" id="resetFormBtn">Clear form</button>
         </div>
       </form>
     </section>
+
     <section class="admin-table-panel">
-      <h2>All projects</h2>
+      <div class="admin-panel-head">
+        <h2>All projects</h2>
+        <p class="admin-panel-subtitle">Click edit to update a project, or delete to remove it.</p>
+      </div>
       <div class="admin-table-wrap">
         <table class="admin-table">
-          <thead><tr><th></th><th>Title</th><th>Cat</th><th>Price</th><th>Live</th><th></th></tr></thead>
+          <thead><tr><th></th><th>Title</th><th>Category</th><th>Price</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody id="adminTableBody"></tbody>
         </table>
       </div>
