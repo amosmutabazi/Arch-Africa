@@ -97,6 +97,84 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+/* Initialize Google Identity Services for Sign-In (if configured) */
+async function initGoogleSignIn() {
+  try {
+    const cfg = await API.config();
+    const clientId = cfg.googleClientId || cfg.GOOGLE_CLIENT_ID || '';
+    if (!clientId) {
+      const hint = document.createElement('div');
+      hint.className = 'gsi-hint';
+      hint.textContent = 'Google Sign-In not configured (set GOOGLE_CLIENT_ID).';
+      const l = document.getElementById('gsiLogin');
+      const r = document.getElementById('gsiReg');
+      if (l && !l.children.length) l.appendChild(hint.cloneNode(true));
+      if (r && !r.children.length) r.appendChild(hint.cloneNode(true));
+      console.info('initGoogleSignIn: GOOGLE_CLIENT_ID not set');
+      return;
+    }
+
+    await new Promise((resolve) => {
+      const s = document.createElement('script');
+      s.src = 'https://accounts.google.com/gsi/client';
+      s.async = true;
+      s.defer = true;
+      s.onload = resolve;
+      s.onerror = () => {
+        console.error('Failed to load Google Identity Services script');
+        resolve();
+      };
+      document.head.appendChild(s);
+    });
+
+    window.handleGoogleCredential = async function (response) {
+      try {
+        const id_token = response.credential;
+        const data = await API.auth.google(id_token);
+        if (data.token) {
+          API.setToken(data.token);
+          API.setUser(data.user);
+          updateAuthUI();
+          closeModal('authModal');
+          showToast(`Welcome, ${data.user.name}!`);
+        }
+      } catch (e) {
+        console.error('Google auth failed', e);
+      }
+    };
+
+    const tryInit = () => {
+      if (window.google && google.accounts && google.accounts.id) {
+        try {
+          google.accounts.id.initialize({ client_id: clientId, callback: handleGoogleCredential });
+          const l = document.getElementById('gsiLogin');
+          const r = document.getElementById('gsiReg');
+          if (l) google.accounts.id.renderButton(l, { theme: 'outline', size: 'large' });
+          if (r) google.accounts.id.renderButton(r, { theme: 'outline', size: 'large' });
+          try { google.accounts.id.prompt(); } catch (e) {}
+          console.info('Google Sign-In initialized');
+          return true;
+        } catch (e) {
+          console.error('Error initializing Google Sign-In', e);
+        }
+      }
+      return false;
+    };
+
+    if (!tryInit()) {
+      let attempts = 0;
+      const id = setInterval(() => {
+        attempts += 1;
+        if (tryInit() || attempts > 8) clearInterval(id);
+      }, 300);
+    }
+  } catch (e) {
+    console.error('Google Sign-In init failed', e);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', initGoogleSignIn);
+
 /* ── Hero slideshow & morph text ── */
 const morphWords = ['Africa', 'Kigali', 'East Africa', 'Your Vision', 'The Future', 'Our Community'];
 let curSlide = 0,
@@ -154,7 +232,16 @@ document.addEventListener('projectsloaded', async () => {
       ...projects.map((p) => ({ name: p.title, cat: p.category, sec: `gallery.html#${p.slug}` })),
       ...searchData,
     ];
-  } catch (_) {}
+  } catch (err) {
+    // if API failed, include offline projects (fallback)
+    const offline = window.OFFLINE_PROJECTS || [];
+    if (offline.length) {
+      searchData = [
+        ...offline.map((p) => ({ name: p.title, cat: p.category, sec: `gallery.html#${p.slug}` })),
+        ...searchData,
+      ];
+    }
+  }
 });
 
 function openSearch() {

@@ -23,7 +23,7 @@ function formatPrice(cents, currency = 'rwf') {
 
 function projectCardHTML(p, opts = {}) {
   const icon = CATEGORY_ICONS[p.category] || '🏗️';
-  const img = p.image_url.startsWith('http') ? p.image_url : p.image_url;
+  const img = p.image_url ? (String(p.image_url).startsWith('http') ? p.image_url : p.image_url) : 'assets/placeholder.jpg';
   const whatsappText = encodeURIComponent(`Hello, I am interested in the ${p.title} design.`);
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
   return `
@@ -39,9 +39,9 @@ function projectCardHTML(p, opts = {}) {
         <p>${escapeHtml(p.description)}</p>
         <p class="pc-price">${formatPrice(p.price_cents, p.currency)}</p>
         <div class="pc-actions">
-          <a class="pc-action pc-more" href="gallery.html#${p.slug}">Read more</a>
-          <a class="pc-action pc-wa" href="${whatsappUrl}" target="_blank" rel="noopener">WhatsApp</a>
-          <button type="button" class="pc-action pc-add-cart" data-id="${p.id}" data-name="${escapeAttr(p.title)}" data-icon="${icon}" data-cat="${escapeAttr(p.category)}">Add to cart</button>
+          <a class="pc-action pc-more" href="gallery.html#${p.slug}" title="Read more">➜</a>
+          <a class="pc-action pc-wa" href="${whatsappUrl}" target="_blank" rel="noopener" title="WhatsApp contact">💬</a>
+          <button type="button" class="pc-action pc-add-cart" data-id="${p.id}" data-name="${escapeAttr(p.title)}" data-icon="${icon}" data-cat="${escapeAttr(p.category)}" title="Add to cart">＋</button>
         </div>
       </div>
     </article>`;
@@ -84,7 +84,7 @@ const OFFLINE_PROJECTS = [
     description: 'A luxurious home with panoramic water views.',
     category: 'house',
     slug: 'lakefront-residence',
-    image_url: 'https://images.unsplash.com/photo-1494526585095-c41746248156?w=1200&q=80',
+    image_url: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200&q=80',
     price_cents: 32000000000,
     currency: 'rwf',
   },
@@ -94,7 +94,7 @@ const OFFLINE_PROJECTS = [
     description: 'Private villa with lush gardens and premium finishes.',
     category: 'villa',
     slug: 'luxury-garden-villa',
-    image_url: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&q=80',
+    image_url: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200&q=80',
     price_cents: 45000000000,
     currency: 'rwf',
   },
@@ -104,7 +104,7 @@ const OFFLINE_PROJECTS = [
     description: 'An ocean-edge retreat with expansive terraces.',
     category: 'villa',
     slug: 'modern-beach-villa',
-    image_url: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&q=80',
+    image_url: 'https://images.unsplash.com/photo-1454329001438-1752daa90420?w=1200&q=80',
     price_cents: 52000000000,
     currency: 'rwf',
   },
@@ -114,7 +114,7 @@ const OFFLINE_PROJECTS = [
     description: 'A secluded villa that blends indoor and outdoor spaces.',
     category: 'villa',
     slug: 'forest-courtyard-villa',
-    image_url: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&q=80',
+    image_url: 'https://images.unsplash.com/photo-1442393559965-5a4adac23211?w=1200&q=80',
     price_cents: 41000000000,
     currency: 'rwf',
   },
@@ -179,7 +179,8 @@ const OFFLINE_PROJECTS = [
     currency: 'rwf',
   },
 ];
-
+// expose for other scripts (search fallback, debugging)
+window.OFFLINE_PROJECTS = OFFLINE_PROJECTS;
 async function loadProjectsInto(gridId, options = {}) {
   const grid = document.getElementById(gridId);
   if (!grid) return [];
@@ -188,9 +189,14 @@ async function loadProjectsInto(gridId, options = {}) {
   grid.innerHTML = '<p class="gallery-loading">Loading projects…</p>';
   try {
     const { projects } = await API.projects.list(params);
-    if (!projects.length) {
-      grid.innerHTML = `<p class="gallery-empty" data-i18n="gallery.empty">No projects yet.</p>`;
-      return [];
+    if (!projects || !projects.length) {
+      // fallback to offline projects when API returns no projects
+      const list = options.limit ? OFFLINE_PROJECTS.slice(0, options.limit) : OFFLINE_PROJECTS;
+      grid.innerHTML = list.map((p) => projectCardHTML(p, options)).join('');
+      bindProjectButtons(grid);
+      if (window.I18n) window.I18n.apply?.();
+      document.dispatchEvent(new CustomEvent('projectsloaded'));
+      return list;
     }
     const limit = options.limit;
     const list = limit ? projects.slice(0, limit) : projects;
@@ -208,23 +214,6 @@ async function loadProjectsInto(gridId, options = {}) {
     document.dispatchEvent(new CustomEvent('projectsloaded'));
     return list;
   }
-}
-
-function bindProjectButtons(container) {
-  container.querySelectorAll('.add-cart, .pc-add-cart').forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      window.addToCart?.({
-        id: Number(btn.dataset.id),
-        name: btn.dataset.name,
-        icon: btn.dataset.icon,
-        cat: btn.dataset.cat,
-      });
-    });
-  });
-  container.querySelectorAll('.buy-now').forEach((btn) => {
-    btn.addEventListener('click', () => window.checkoutProject?.(Number(btn.dataset.buyId)));
-  });
 }
 
 function filterProjects(f) {

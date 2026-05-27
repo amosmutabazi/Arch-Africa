@@ -16,6 +16,12 @@
 [data-theme="light"] .hero-overlay{background:linear-gradient(180deg,rgba(245,245,240,.3),rgba(8,8,8,.75))}
 [data-theme="light"] .modal-card,[data-theme="light"] .est-dialog,[data-theme="light"] .popup-card{background:#fff}
 [data-theme="light"] .f-field input,[data-theme="light"] .f-field textarea{color:#111;background:#f0f0eb}
+
+/* Improve visibility of action buttons and accents in light theme */
+[data-theme="light"] .pc-action.pc-add-cart{background:#1a7a28;color:#fff;border-color:transparent}
+[data-theme="light"] .pc-action.pc-wa{background:#0f9a4a;color:#fff}
+[data-theme="light"] .pc-action.pc-more{background:rgba(0,0,0,.06);color:#111;border-color:rgba(0,0,0,.06)}
+[data-theme="light"] .pc-price{color:#0b6a18}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 html[style*="overflow:hidden"], body[style*="overflow:hidden"]{scroll-behavior:auto}
@@ -603,6 +609,9 @@ header.scrolled .navbar{
 }
 .backdrop.open{opacity:1;visibility:visible}
 
+/* Blur the page behind modals to create a mirrored background */
+.backdrop.open{backdrop-filter:blur(6px)}
+
 /* Auth modal background scene (glassy gradient like reference) */
 #authModal{
   overflow:hidden;
@@ -627,7 +636,7 @@ header.scrolled .navbar{
 }
 #authModal .auth-scene{
   position:absolute;inset:0;z-index:2;pointer-events:none;
-  display:flex;align-items:center;justify-content:center;
+  display:none; /* hide decorative 'bar' behind modal so the real page shows through */
 }
 #authModal .auth-scene-shell{
   width:min(980px,92vw);
@@ -706,12 +715,13 @@ header.scrolled .navbar{
 
 #authModal .modal-card{position:relative;z-index:3}
 .modal-card{
-  background:#0E0E0E;border:1px solid var(--border2);border-radius:20px;
+  background:rgba(14,14,14,0.62);border:1px solid var(--border2);border-radius:20px;
   padding:2.4rem;width:100%;max-width:440px;position:relative;
   box-shadow:0 30px 80px rgba(0,0,0,.8),0 0 0 1px rgba(212,255,0,.06);
   animation:slideUp .15s ease;max-height:85vh;overflow-y:auto;
   flex-shrink:0;
 }
+.modal-card{backdrop-filter:blur(4px)}
 @keyframes slideUp{from{transform:translateY(12px);opacity:0}to{transform:translateY(0);opacity:1}}
 .modal-close{
   position:absolute;top:1rem;right:1rem;width:30px;height:30px;border-radius:100px;

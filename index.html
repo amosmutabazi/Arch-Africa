@@ -531,6 +531,9 @@
       </div>
       <button class="btn-full" onclick="doLogin()">Login →</button>
       <p class="auth-msg" id="lMsg"></p>
+      <div style="margin-top:.6rem;display:flex;gap:.5rem;align-items:center;justify-content:center">
+        <div id="gsiLogin"></div>
+      </div>
       <p class="sw-line">No account? <button class="sw-btn" onclick="showPanel('register')">Register now</button></p>
     </div>
 
@@ -543,6 +546,9 @@
       <label class="terms-row"><input type="checkbox" id="rTerms"/>I agree to the <a href="#" style="color:var(--y)">Terms</a> &amp; <a href="#" style="color:var(--y)">Privacy Policy</a></label>
       <button class="btn-full" onclick="doRegister()">Create Account →</button>
       <p class="auth-msg" id="rMsg"></p>
+      <div style="margin-top:.6rem;display:flex;gap:.5rem;align-items:center;justify-content:center">
+        <div id="gsiReg"></div>
+      </div>
       <p class="sw-line">Have an account? <button class="sw-btn" onclick="showPanel('login')">Login here</button></p>
     </div>
 

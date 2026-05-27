@@ -36,6 +36,7 @@ app.get('/api/config', (_req, res) => {
     tawkPropertyId: process.env.TAWK_PROPERTY_ID || '',
     tawkWidgetId: process.env.TAWK_WIDGET_ID || 'default',
     siteUrl: process.env.SITE_URL || `http://localhost:${PORT}`,
+    googleClientId: process.env.GOOGLE_CLIENT_ID || '',
   });
 });
 

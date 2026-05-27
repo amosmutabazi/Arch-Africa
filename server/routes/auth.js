@@ -77,7 +77,48 @@ router.post('/register', (req, res) => {
 
   const user = db.prepare('SELECT id, name, email, role FROM users WHERE id = ?').get(result.lastInsertRowid);
   const token = signToken(user);
+  // send welcome email if configured
+  if (emailTransporter) {
+    emailTransporter
+      .sendMail({
+        from: emailFrom,
+        to: user.email,
+        subject: 'Welcome to ARCH-AFRICA',
+        html: `<p>Hi ${user.name},</p><p>Welcome to ARCH-AFRICA. Your account has been created.</p>`,
+      })
+      .catch((err) => console.error('Welcome email failed:', err));
+  }
+
   res.status(201).json({ token, user: publicUser(user) });
+});
+
+// Google sign-in: accept Google ID token from client, verify, and create/find user
+router.post('/google', async (req, res) => {
+  const { id_token } = req.body;
+  if (!id_token) return res.status(400).json({ error: 'id_token required' });
+  try {
+    // verify token with Google tokeninfo endpoint
+    const resp = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(id_token)}`);
+    const data = await resp.json();
+    if (data.aud && process.env.GOOGLE_CLIENT_ID && data.aud !== process.env.GOOGLE_CLIENT_ID) {
+      return res.status(400).json({ error: 'Invalid token audience' });
+    }
+    const email = (data.email || '').toLowerCase();
+    if (!email) return res.status(400).json({ error: 'Unable to verify Google token' });
+    let user = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
+    if (!user) {
+      const name = data.name || email.split('@')[0];
+      const result = db
+        .prepare('INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, ?)')
+        .run(name, email, '', 'user');
+      user = db.prepare('SELECT id, name, email, role FROM users WHERE id = ?').get(result.lastInsertRowid);
+    }
+    const token = signToken(user);
+    res.json({ token, user: publicUser(user) });
+  } catch (e) {
+    console.error('Google sign-in failed', e);
+    res.status(500).json({ error: 'Google sign-in failed' });
+  }
 });
 
 router.post('/login', (req, res) => {

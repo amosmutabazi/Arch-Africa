@@ -42,6 +42,7 @@ const API = {
       API.request('/api/auth/forgot-password', { method: 'POST', body: JSON.stringify({ email }) }),
     reset: (token, password) =>
       API.request('/api/auth/reset-password', { method: 'POST', body: JSON.stringify({ token, password }) }),
+    google: (id_token) => API.request('/api/auth/google', { method: 'POST', body: JSON.stringify({ id_token }) }),
   },
   projects: {
     list: (params = {}) => {
