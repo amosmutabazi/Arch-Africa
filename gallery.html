@@ -61,6 +61,30 @@
   </div>
 </main>
 
+<!-- Project Details Modal -->
+<div class="backdrop" id="projectDetailsModal">
+  <div class="modal-card project-details-card">
+    <button class="modal-close" onclick="closeProjectDetails()">✕</button>
+    <div class="proj-details-grid">
+      <div class="proj-details-img">
+        <img id="pdImage" src="" alt="Project" style="width:100%;height:auto;border-radius:8px;object-fit:cover"/>
+      </div>
+      <div class="proj-details-info">
+        <h2 id="pdTitle"></h2>
+        <p class="proj-details-category"><strong id="pdCategory"></strong></p>
+        <p class="proj-details-price" id="pdPrice"></p>
+        <p id="pdDescription" class="proj-details-desc"></p>
+        
+        <div class="proj-details-actions">
+          <button class="btn-full" type="button" id="pdAddCart">+ Add to Cart</button>
+          <button class="btn-full-secondary" type="button" onclick="openCostEstimator()">🧮 Cost Estimator</button>
+          <a id="pdWhatsapp" class="btn-full-secondary" target="_blank" rel="noopener">💬 Contact via WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="cart-ov" id="cartOv"></div>
 <div class="cart-drawer" id="cartDrawer">
   <div class="cart-hdr"><h3 data-i18n="cart.title">Saved Designs</h3><button class="cart-x" id="cartX">✕</button></div>

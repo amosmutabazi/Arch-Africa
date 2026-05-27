@@ -26,6 +26,9 @@ function projectCardHTML(p, opts = {}) {
   const img = p.image_url ? (String(p.image_url).startsWith('http') ? p.image_url : p.image_url) : 'assets/placeholder.jpg';
   const whatsappText = encodeURIComponent(`Hello, I am interested in the ${p.title} design.`);
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
+  const onReadMore = window.location.pathname.includes('gallery.html') 
+    ? `openProjectDetails('${p.slug}')` 
+    : `location.href='gallery.html#${p.slug}'`;
   return `
     <article class="proj-card" data-category="${p.category}" data-id="${p.id}">
       <a href="gallery.html#${p.slug}" class="pc-img-link">
@@ -39,7 +42,7 @@ function projectCardHTML(p, opts = {}) {
         <p>${escapeHtml(p.description)}</p>
         <p class="pc-price">${formatPrice(p.price_cents, p.currency)}</p>
         <div class="pc-actions">
-          <a class="pc-action pc-more" href="gallery.html#${p.slug}" title="Read more">➜</a>
+          <button type="button" class="pc-action pc-more" onclick="${onReadMore}" title="Read more">➜</button>
           <a class="pc-action pc-wa" href="${whatsappUrl}" target="_blank" rel="noopener" title="WhatsApp contact">💬</a>
           <button type="button" class="pc-action pc-add-cart" data-id="${p.id}" data-name="${escapeAttr(p.title)}" data-icon="${icon}" data-cat="${escapeAttr(p.category)}" title="Add to cart">＋</button>
         </div>
