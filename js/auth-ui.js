@@ -66,10 +66,13 @@ window.doRegister = async function () {
   rMsg.textContent = 'Creating account...';
   rMsg.className = 'auth-msg';
   try {
-    const { token, user } = await API.auth.register({ name, email, password });
+    const { token, user, emailSent } = await API.auth.register({ name, email, password });
     API.setToken(token);
     API.setUser(user);
-    setMsg('rMsg', '✓ Account created', 'ok');
+    const message = emailSent
+      ? '✓ Account created. Welcome! A confirmation email has been sent.'
+      : '✓ Account created. Email service not configured, so email notifications are disabled.';
+    setMsg('rMsg', message, 'ok');
     updateAuthUI();
     closeModal('authModal');
     showToast(`Welcome, ${name}! 🎉`);
