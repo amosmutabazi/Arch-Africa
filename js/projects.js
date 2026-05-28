@@ -23,7 +23,7 @@ function formatPrice(cents, currency = 'rwf') {
 
 function projectCardHTML(p, opts = {}) {
   const icon = CATEGORY_ICONS[p.category] || '🏗️';
-  const img = p.image_url ? (String(p.image_url).startsWith('http') ? p.image_url : p.image_url) : 'assets/placeholder.jpg';
+  const img = p.image_url ? String(p.image_url) : 'assets/arch-africa-logo.png';
   const whatsappText = encodeURIComponent(`Hello, I am interested in the ${p.title} design.`);
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
   const onReadMore = window.location.pathname.includes('gallery.html') 
@@ -60,6 +60,25 @@ function escapeAttr(s) {
   return String(s).replace(/"/g, '&quot;');
 }
 
+/*
+  Trending designs can use local project images stored in assets/projects/.
+  Add your own file there and set image_url to the relative path from the website root.
+
+  Example project entry:
+  {
+    id: 0,
+    title: 'Modern Family Home',
+    description: 'A warm, modern residence with bright open-plan living.',
+    category: 'house',
+    slug: 'modern-family-home',
+    image_url: 'assets/projects/modern-family-home.jpg',
+    price_cents: 29000000000,
+    currency: 'rwf',
+  }
+
+  If you use the admin dashboard, the Image URL field accepts the same relative path.
+  Uploaded files are stored under /uploads/ and saved as /uploads/filename.jpg.
+*/
 const OFFLINE_PROJECTS = [
   {
     id: 0,

@@ -50,24 +50,24 @@ function closeModal(id) {
 
 /* ── Auth panel ── */
 function showPanel(p) {
-  ['pLogin', 'pReg', 'pForgot'].forEach((x) => document.getElementById(x).classList.remove('active'));
-  document.getElementById('authTabs').style.display = p === 'forgot' ? 'none' : 'flex';
-  document.getElementById('aTabLogin').classList.toggle('active', p === 'login');
-  document.getElementById('aTabReg').classList.toggle('active', p === 'register');
+  ['pLogin', 'pReg', 'pForgot'].forEach((x) => document.getElementById(x)?.classList.remove('active'));
+  document.getElementById('authTabs')?.style.setProperty('display', p === 'forgot' ? 'none' : 'flex');
+  document.getElementById('aTabLogin')?.classList.toggle('active', p === 'login');
+  document.getElementById('aTabReg')?.classList.toggle('active', p === 'register');
   if (p === 'login') {
-    document.getElementById('pLogin').classList.add('active');
-    document.getElementById('authH2').textContent = I18n?.t('auth.welcome', 'Welcome Back') || 'Welcome Back';
-    document.getElementById('authSub').textContent = 'Login to your ARCH-AFRICA account.';
+    document.getElementById('pLogin')?.classList.add('active');
+    document.getElementById('authH2') && (document.getElementById('authH2').textContent = I18n?.t('auth.welcome', 'Welcome Back') || 'Welcome Back');
+    document.getElementById('authSub') && (document.getElementById('authSub').textContent = 'Login to your ARCH-AFRICA account.');
   } else if (p === 'register') {
-    document.getElementById('pReg').classList.add('active');
-    document.getElementById('authH2').textContent = I18n?.t('auth.create', 'Create Account') || 'Create Account';
-    document.getElementById('authSub').textContent = 'Register with Google or email to start your project.';
+    document.getElementById('pReg')?.classList.add('active');
+    document.getElementById('authH2') && (document.getElementById('authH2').textContent = I18n?.t('auth.create', 'Create Account') || 'Create Account');
+    document.getElementById('authSub') && (document.getElementById('authSub').textContent = 'Register with Google or email to start your project.');
   } else {
-    document.getElementById('pForgot').classList.add('active');
-    document.getElementById('authH2').textContent = 'Reset Password';
-    document.getElementById('authSub').textContent = "We'll help you regain access.";
-    ['fs1', 'fs2', 'fs3'].forEach((s) => document.getElementById(s).classList.remove('active'));
-    document.getElementById('fs1').classList.add('active');
+    document.getElementById('pForgot')?.classList.add('active');
+    document.getElementById('authH2') && (document.getElementById('authH2').textContent = 'Reset Password');
+    document.getElementById('authSub') && (document.getElementById('authSub').textContent = "We'll help you regain access.");
+    ['fs1', 'fs2', 'fs3'].forEach((s) => document.getElementById(s)?.classList.remove('active'));
+    document.getElementById('fs1')?.classList.add('active');
   }
 }
 document.getElementById('aTabLogin')?.addEventListener('click', () => showPanel('login'));
@@ -172,7 +172,7 @@ async function initGoogleSignIn() {
             google.accounts.id.renderButton(l, {
               theme: 'outline',
               size: 'large',
-              text: 'signin_with',
+              text: 'continue_with',
             });
           }
           if (r) {
@@ -180,7 +180,7 @@ async function initGoogleSignIn() {
             google.accounts.id.renderButton(r, {
               theme: 'outline',
               size: 'large',
-              text: 'signup_with',
+              text: 'continue_with',
             });
           }
 
