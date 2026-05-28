@@ -1,19 +1,10 @@
 window.openProjectDetails = async function (slug) {
   try {
-    const { project } = await API.projects.list({ lang: I18n?.getLang?.() || 'en' })
-      .then(({ projects }) => {
-        const p = projects.find((pr) => pr.slug === slug) || window.OFFLINE_PROJECTS?.find((pr) => pr.slug === slug);
-        return { project: p };
-      })
-      .catch(() => {
-        const p = window.OFFLINE_PROJECTS?.find((pr) => pr.slug === slug);
-        return { project: p };
-      });
-    
+    const { projects } = await API.projects.list({ lang: window.I18n?.getLang?.() || 'en' });
+    const project = projects.find((pr) => pr.slug === slug);
     if (!project) return;
 
-    const modal = document.getElementById('projectDetailsModal');
-    document.getElementById('pdImage').src = project.image_url || 'assets/placeholder.jpg';
+    document.getElementById('pdImage').src = project.image_url || 'assets/arch-africa-logo.png';
     document.getElementById('pdTitle').textContent = project.title;
     document.getElementById('pdCategory').textContent = project.category.charAt(0).toUpperCase() + project.category.slice(1);
     document.getElementById('pdPrice').textContent = formatPrice(project.price_cents, project.currency);
@@ -26,9 +17,9 @@ window.openProjectDetails = async function (slug) {
     };
 
     const whatsappText = encodeURIComponent(`Hello, I'm interested in the ${project.title} design.`);
-    document.getElementById('pdWhatsapp').href = `https://wa.me/${window.WHATSAPP_NUMBER || '250788000000'}?text=${whatsappText}`;
+    document.getElementById('pdWhatsapp').href = `https://wa.me/250798541111?text=${whatsappText}`;
 
-    modal.classList.add('open');
+    document.getElementById('projectDetailsModal').classList.add('open');
     document.body.style.overflow = 'hidden';
   } catch (e) {
     console.error('Error opening project details', e);
@@ -36,8 +27,7 @@ window.openProjectDetails = async function (slug) {
 };
 
 window.closeProjectDetails = function () {
-  const modal = document.getElementById('projectDetailsModal');
-  modal.classList.remove('open');
+  document.getElementById('projectDetailsModal').classList.remove('open');
   document.body.style.overflow = '';
 };
 
@@ -50,7 +40,6 @@ window.openCostEstimator = function () {
   }
 };
 
-// Close modal when clicking outside the modal card
 document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('projectDetailsModal');
   if (modal) {
@@ -65,13 +54,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   const params = new URLSearchParams(location.search);
   let filter = params.get('category') || 'all';
 
-  await loadProjectsInto('galleryGrid', { showBuy: true });
+  await loadProjectsInto('galleryGrid', { showBuy: true, params: {} });
 
   if (location.hash) {
     const slug = location.hash.slice(1);
-    const card = document.querySelector(`[data-category]`);
     document.querySelectorAll('.proj-card').forEach((c) => {
-      if (c.querySelector(`a[href*="${slug}"]`)) c.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (c.querySelector(`a[href*="${slug}"]`)) {
+        c.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     });
   }
 
@@ -88,7 +78,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   filterProjects(filter);
 
   document.addEventListener('langchange', () => {
-    loadProjectsInto('galleryGrid', { showBuy: true }).then(() => filterProjects(filter));
+    loadProjectsInto('galleryGrid', { showBuy: true, params: {} }).then(() => filterProjects(filter));
   });
 
   if (params.get('canceled')) showToast('Checkout canceled');

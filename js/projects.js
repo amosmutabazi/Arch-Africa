@@ -7,7 +7,7 @@ const CATEGORY_ICONS = {
   institutional: '🏛️',
   greenhouse: '🌿',
 };
-const WHATSAPP_NUMBER = '250788000000';
+const WHATSAPP_NUMBER = '250798541111';
 
 function formatPrice(cents, currency = 'rwf') {
   if (!cents) return 'Contact for price';
@@ -26,8 +26,8 @@ function projectCardHTML(p, opts = {}) {
   const img = p.image_url ? String(p.image_url) : 'assets/arch-africa-logo.png';
   const whatsappText = encodeURIComponent(`Hello, I am interested in the ${p.title} design.`);
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
-  const onReadMore = window.location.pathname.includes('gallery.html') 
-    ? `openProjectDetails('${p.slug}')` 
+  const onReadMore = window.location.pathname.includes('gallery.html')
+    ? `openProjectDetails('${p.slug}')`
     : `location.href='gallery.html#${p.slug}'`;
   return `
     <article class="proj-card" data-category="${p.category}" data-id="${p.id}">
@@ -48,7 +48,6 @@ function projectCardHTML(p, opts = {}) {
         </div>
       </div>
     </article>`;
-
 }
 
 function escapeHtml(s) {
@@ -60,149 +59,8 @@ function escapeAttr(s) {
   return String(s).replace(/"/g, '&quot;');
 }
 
-/*
-  Trending designs can use local project images stored in assets/projects/.
-  Add your own file there and set image_url to the relative path from the website root.
+window.OFFLINE_PROJECTS = [];
 
-  Example project entry:
-  {
-    id: 0,
-    title: 'Modern Family Home',
-    description: 'A warm, modern residence with bright open-plan living.',
-    category: 'house',
-    slug: 'modern-family-home',
-    image_url: 'assets/projects/modern-family-home.jpg',
-    price_cents: 29000000000,
-    currency: 'rwf',
-  }
-
-  If you use the admin dashboard, the Image URL field accepts the same relative path.
-  Uploaded files are stored under /uploads/ and saved as /uploads/filename.jpg.
-*/
-const OFFLINE_PROJECTS = [
-  {
-    id: 0,
-    title: 'Modern Family Home',
-    description: 'A warm, modern residence with bright open-plan living.',
-    category: 'house',
-    slug: 'modern-family-home',
-    image_url: 'https://images.unsplash.com/photo-1494526585095-c41746248156?w=1200&q=80',
-    price_cents: 29000000000,
-    currency: 'rwf',
-  },
-  {
-    id: 1,
-    title: 'Minimalist Suburban House',
-    description: 'Clean lines, natural materials and a quiet courtyard.',
-    category: 'house',
-    slug: 'minimalist-suburban-house',
-    image_url: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&q=80',
-    price_cents: 23500000000,
-    currency: 'rwf',
-  },
-  {
-    id: 2,
-    title: 'Lakefront Residence',
-    description: 'A luxurious home with panoramic water views.',
-    category: 'house',
-    slug: 'lakefront-residence',
-    image_url: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200&q=80',
-    price_cents: 32000000000,
-    currency: 'rwf',
-  },
-  {
-    id: 3,
-    title: 'Luxury Garden Villa',
-    description: 'Private villa with lush gardens and premium finishes.',
-    category: 'villa',
-    slug: 'luxury-garden-villa',
-    image_url: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200&q=80',
-    price_cents: 45000000000,
-    currency: 'rwf',
-  },
-  {
-    id: 4,
-    title: 'Modern Beach Villa',
-    description: 'An ocean-edge retreat with expansive terraces.',
-    category: 'villa',
-    slug: 'modern-beach-villa',
-    image_url: 'https://images.unsplash.com/photo-1454329001438-1752daa90420?w=1200&q=80',
-    price_cents: 52000000000,
-    currency: 'rwf',
-  },
-  {
-    id: 5,
-    title: 'Forest Courtyard Villa',
-    description: 'A secluded villa that blends indoor and outdoor spaces.',
-    category: 'villa',
-    slug: 'forest-courtyard-villa',
-    image_url: 'https://images.unsplash.com/photo-1442393559965-5a4adac23211?w=1200&q=80',
-    price_cents: 41000000000,
-    currency: 'rwf',
-  },
-  {
-    id: 6,
-    title: 'Rooftop City Hotel',
-    description: 'Contemporary hotel design for premium urban guests.',
-    category: 'hotel',
-    slug: 'rooftop-city-hotel',
-    image_url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80',
-    price_cents: 68000000000,
-    currency: 'rwf',
-  },
-  {
-    id: 7,
-    title: 'Boutique Hotel Lobby',
-    description: 'A stylish hotel lobby with boutique hospitality flair.',
-    category: 'hotel',
-    slug: 'boutique-hotel-lobby',
-    image_url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80',
-    price_cents: 59000000000,
-    currency: 'rwf',
-  },
-  {
-    id: 8,
-    title: 'Resort Hotel Suites',
-    description: 'Spacious guest suites for resort-style hospitality.',
-    category: 'hotel',
-    slug: 'resort-hotel-suites',
-    image_url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80',
-    price_cents: 72000000000,
-    currency: 'rwf',
-  },
-  {
-    id: 9,
-    title: 'Urban Office Tower',
-    description: 'A landmark commercial tower designed for business tenants.',
-    category: 'commercial',
-    slug: 'urban-office-tower',
-    image_url: 'https://images.unsplash.com/photo-1531870975029-75471b00a667?w=1200&q=80',
-    price_cents: 76000000000,
-    currency: 'rwf',
-  },
-  {
-    id: 10,
-    title: 'Creative Studio Complex',
-    description: 'Flexible commercial space built for creative teams.',
-    category: 'commercial',
-    slug: 'creative-studio-complex',
-    image_url: 'https://images.unsplash.com/photo-1531870975029-75471b00a667?w=1200&q=80',
-    price_cents: 43000000000,
-    currency: 'rwf',
-  },
-  {
-    id: 11,
-    title: 'Retail Plaza',
-    description: 'A modern plaza with retail storefronts and dining zones.',
-    category: 'commercial',
-    slug: 'retail-plaza',
-    image_url: 'https://images.unsplash.com/photo-1531870975029-75471b00a667?w=1200&q=80',
-    price_cents: 50000000000,
-    currency: 'rwf',
-  },
-];
-// expose for other scripts (search fallback, debugging)
-window.OFFLINE_PROJECTS = OFFLINE_PROJECTS;
 async function loadProjectsInto(gridId, options = {}) {
   const grid = document.getElementById(gridId);
   if (!grid) return [];
@@ -212,13 +70,9 @@ async function loadProjectsInto(gridId, options = {}) {
   try {
     const { projects } = await API.projects.list(params);
     if (!projects || !projects.length) {
-      // fallback to offline projects when API returns no projects
-      const list = options.limit ? OFFLINE_PROJECTS.slice(0, options.limit) : OFFLINE_PROJECTS;
-      grid.innerHTML = list.map((p) => projectCardHTML(p, options)).join('');
-      bindProjectButtons(grid);
-      if (window.I18n) window.I18n.apply?.();
+      grid.innerHTML = '<p style="text-align:center;color:var(--muted);padding:2rem">No projects found.</p>';
       document.dispatchEvent(new CustomEvent('projectsloaded'));
-      return list;
+      return [];
     }
     const limit = options.limit;
     const list = limit ? projects.slice(0, limit) : projects;
@@ -228,14 +82,24 @@ async function loadProjectsInto(gridId, options = {}) {
     document.dispatchEvent(new CustomEvent('projectsloaded'));
     return projects;
   } catch (e) {
-    console.error(e);
-    const list = options.limit ? OFFLINE_PROJECTS.slice(0, options.limit) : OFFLINE_PROJECTS;
-    grid.innerHTML = list.map((p) => projectCardHTML(p, options)).join('');
-    bindProjectButtons(grid);
-    if (window.I18n) window.I18n.apply?.();
+    console.error('Failed to load projects:', e);
+    grid.innerHTML = '<p style="text-align:center;color:var(--muted);padding:2rem">Failed to load projects. Please refresh.</p>';
     document.dispatchEvent(new CustomEvent('projectsloaded'));
-    return list;
+    return [];
   }
+}
+
+function bindProjectButtons(grid) {
+  grid.querySelectorAll('.pc-add-cart').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      addToCart({
+        id: btn.dataset.id,
+        name: btn.dataset.name,
+        cat: btn.dataset.cat,
+        icon: btn.dataset.icon,
+      });
+    });
+  });
 }
 
 function filterProjects(f) {
