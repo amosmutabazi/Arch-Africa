@@ -108,14 +108,16 @@ header.scrolled .navbar{
 
 /* User Guide pill button in nav */
 .nav-guide-pill{
-  display:inline-flex;align-items:center;gap:.35rem;
+  display:flex;align-items:center;gap:.35rem;
   padding:.38rem .95rem;border-radius:100px;
   background:rgba(212,255,0,.1);border:1px solid rgba(212,255,0,.25);
   color:var(--y);font-size:.78rem;font-weight:600;font-family:'Libre Baskerville',serif;
-  text-decoration:none;transition:all .25s ease;white-space:nowrap;vertical-align:middle;
-  margin-left:.25rem; /* small offset to visually align with other links */
+  text-decoration:none;transition:all .25s ease;white-space:nowrap;
+  margin-left:0;
+  flex-shrink:0;
 }
 .nav-guide-pill:hover{background:rgba(212,255,0,.18);border-color:var(--y);color:var(--y)}
+.nav-actions .nav-guide-pill{margin-left:.25rem;}
 
 /* Dropdown */
 .nav-item{position:relative}
