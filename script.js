@@ -87,11 +87,16 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('projTabs')?.addEventListener('click', (e) => {
       const btn = e.target.closest('.tab');
       if (!btn) return;
-      filterProjects(btn.dataset.filter);
+      const category = btn.dataset.filter || 'all';
+      const target = category === 'all' ? 'gallery.html' : `gallery.html?category=${encodeURIComponent(category)}`;
+      window.location.href = target;
     });
     document.querySelectorAll('[data-filter]').forEach((el) => {
       el.addEventListener('click', () => {
-        if (el.dataset.filter) filterProjects(el.dataset.filter);
+        const category = el.dataset.filter;
+        if (!category) return;
+        const target = category === 'all' ? 'gallery.html' : `gallery.html?category=${encodeURIComponent(category)}`;
+        window.location.href = target;
       });
     });
   });

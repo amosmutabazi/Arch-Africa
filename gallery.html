@@ -12,6 +12,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="styles.css"/>
+
+<!-- Google Analytics: replace G-XXXXXXXXXX with your GA measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XXXXXXXXXX');
+</script>
 </head>
 <body>
 <div class="util-bar">
@@ -105,5 +114,9 @@
 function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 </script>
 <script src="js/gallery-page.js"></script>
+<a class="whatsapp-float" href="https://wa.me/250788000000?text=Hello%20ARCH-AFRICA%2C%20I%20need%20help%20with%20a%20project." target="_blank" rel="noopener" aria-label="Contact us on WhatsApp">
+  <span class="whatsapp-icon">💬</span>
+  <span class="whatsapp-label">WhatsApp</span>
+</a>
 </body>
 </html>

@@ -16,6 +16,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="styles.css"/>
+
+<!-- Google Analytics: replace G-XXXXXXXXXX with your GA measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XXXXXXXXXX');
+</script>
 </head>
 <body>
 
@@ -76,13 +85,13 @@
       <a class="nav-link" href="#services" data-i18n="nav.services">Our Services</a>
       <a class="nav-link" href="#about" data-i18n="nav.about">About Us</a>
       <a class="nav-link" href="#contact" data-i18n="nav.contact">Contact Us</a>
-      <button class="nav-link" onclick="openModal('estimatorModal')" style="cursor:pointer" data-i18n="nav.estimator">Cost Estimator</button>
       <a class="nav-link" href="admin.html" id="adminNavLink" style="display:none" data-i18n="nav.admin">Admin</a>
     </div>
 
     <!-- Right actions -->
     <div class="nav-actions">
       <a class="nav-guide-pill" href="assets/A_guide_for_shopping_at_ARCH-AFRICA_BUREAU_WEBSITE1.pdf" target="_blank" rel="noopener" data-i18n="nav.guide">📄 User Guide ↗</a>
+      <button class="nav-estimator-pill" type="button" onclick="openModal('estimatorModal')" data-i18n="nav.estimator">🧮 Estimator</button>
       <button class="nav-icon" id="openSearchBtn" title="Search">🔍</button>
       <button class="nav-icon" id="openCartBtn" title="Saved Designs">
         🛒<span class="c-badge" id="cartBadge">0</span>
@@ -151,29 +160,38 @@
   <div class="hero-overlay"></div>
   <div class="hero-noise"></div>
 
-  <div class="hero-content">
-    <div class="hero-kicker" data-i18n="hero.kicker">🏗️ &nbsp;ARCH AFRICA — Premier Architectural Solutions</div>
-    <h1 class="hero-h1">
-      <span data-i18n="hero.title1">Building the Future of</span>
-      <span class="hero-morph-line">
-        <span class="morph-word in" id="morphWord">Africa</span>
-      </span>
-    </h1>
-    <p class="hero-sub" data-i18n="hero.sub">Modern, permit-ready architectural designs crafted for African landscapes, communities, and ambitions.</p>
-    <div class="hero-btns">
-      <button class="hero-btn-p" onclick="document.querySelector('#projects').scrollIntoView({behavior:'smooth'})" data-i18n="hero.explore">Explore Designs →</button>
-      <button class="hero-btn-s" onclick="openModal('estimatorModal')" data-i18n="hero.estimate">Get Cost Estimate</button>
-    </div>
-    <div class="hero-counter-wrap">
-      <div class="hero-dots-row" id="heroDots">
-        <button class="hero-dot active" data-i="0"></button>
-        <button class="hero-dot" data-i="1"></button>
-        <button class="hero-dot" data-i="2"></button>
-        <button class="hero-dot" data-i="3"></button>
-        <button class="hero-dot" data-i="4"></button>
+  <div class="hero-content hero-layout">
+    <div class="hero-main">
+      <div class="hero-kicker" data-i18n="hero.kicker">🏗️ &nbsp;ARCH AFRICA — Premier Architectural Solutions</div>
+      <h1 class="hero-h1">
+        <span data-i18n="hero.title1">Building the Future of</span>
+        <span class="hero-morph-line">
+          <span class="morph-word in" id="morphWord">Africa</span>
+        </span>
+      </h1>
+      <p class="hero-sub" data-i18n="hero.sub">Modern, permit-ready architectural designs crafted for African landscapes, communities, and ambitions.</p>
+      <div class="hero-btns">
+        <button class="hero-btn-p" onclick="document.querySelector('#projects').scrollIntoView({behavior:'smooth'})" data-i18n="hero.explore">Explore Designs →</button>
+        <button class="hero-btn-s" onclick="openModal('estimatorModal')" data-i18n="hero.estimate">Get Cost Estimate</button>
       </div>
-      <span class="hero-dot-num" id="heroNum">01 / 05</span>
+      <div class="hero-counter-wrap">
+        <div class="hero-dots-row" id="heroDots">
+          <button class="hero-dot active" data-i="0"></button>
+          <button class="hero-dot" data-i="1"></button>
+          <button class="hero-dot" data-i="2"></button>
+          <button class="hero-dot" data-i="3"></button>
+          <button class="hero-dot" data-i="4"></button>
+        </div>
+        <span class="hero-dot-num" id="heroNum">01 / 05</span>
+      </div>
     </div>
+    <aside class="hero-side">
+      <p class="hero-side-kicker">Trusted Across Africa</p>
+      <div class="hero-side-stat"><strong>12+</strong><span>Years of Experience</span></div>
+      <div class="hero-side-stat"><strong>500+</strong><span>Projects Delivered</span></div>
+      <div class="hero-side-stat"><strong>30+</strong><span>Expert Architects</span></div>
+      <a href="#contact" class="hero-side-link">Start your project consultation →</a>
+    </aside>
   </div>
 </section>
 
@@ -304,7 +322,7 @@
     <div class="inquiry-wrap reveal">
       <h3 class="inquiry-h3">Send Us a Message</h3>
       <p class="inquiry-sub">Tell us about your project — we typically respond within 24 hours.</p>
-      <form class="inquiry-form" id="inquiryForm" novalidate>
+     <form class="inquiry-form" id="inquiryForm" novalidate onsubmit="submitInquiry(event)">
         <div class="inquiry-row">
           <div class="f-field">
             <label for="inqName">Full Name</label>
@@ -673,6 +691,9 @@
 <script src="js/chat.js"></script>
 <script src="script.js"></script>
 <script>window.__GOOGLE_CLIENT_ID__ = '553141827957-q3aok3tc9jtqpno0p6lb4g1d66lkd8i7.apps.googleusercontent.com';</script>
-
+<a class="whatsapp-float" href="https://wa.me/250788000000?text=Hello%20ARCH-AFRICA%2C%20I%20need%20help%20with%20a%20project." target="_blank" rel="noopener" aria-label="Contact us on WhatsApp">
+  <span class="whatsapp-icon">💬</span>
+  <span class="whatsapp-label">WhatsApp</span>
+</a>
 </body>
 </html>
