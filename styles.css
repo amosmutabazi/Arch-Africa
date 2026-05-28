@@ -90,7 +90,7 @@ header.scrolled .navbar{
 .nav-logo-sub{display:block;font-family:'Libre Baskerville',serif;font-size:.55rem;font-weight:400;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:.15rem}
 
 /* Nav center links */
-.nav-links{display:flex;align-items:center;gap:.1rem;flex:1;justify-content:center}
+.nav-links{display:flex;align-items:center;gap:.1rem;flex:1 1 0;justify-content:center;min-width:0;flex-wrap:nowrap;overflow:hidden}
 .nav-link{
   position:relative;display:flex;align-items:center;gap:.28rem;
   color:var(--y);text-decoration:none;font-size:.78rem;font-weight:600;
@@ -108,11 +108,12 @@ header.scrolled .navbar{
 
 /* User Guide pill button in nav */
 .nav-guide-pill{
-  display:flex;align-items:center;gap:.35rem;
+  display:inline-flex;align-items:center;gap:.35rem;
   padding:.38rem .95rem;border-radius:100px;
   background:rgba(212,255,0,.1);border:1px solid rgba(212,255,0,.25);
   color:var(--y);font-size:.78rem;font-weight:600;font-family:'Libre Baskerville',serif;
-  text-decoration:none;transition:all .25s ease;white-space:nowrap;
+  text-decoration:none;transition:all .25s ease;white-space:nowrap;vertical-align:middle;
+  margin-left:.25rem; /* small offset to visually align with other links */
 }
 .nav-guide-pill:hover{background:rgba(212,255,0,.18);border-color:var(--y);color:var(--y)}
 
@@ -162,6 +163,7 @@ header.scrolled .navbar{
   min-width:0;
   margin-left:.4rem;
   justify-content:flex-end;
+  flex-wrap:wrap;
 }
 .nav-actions > *{min-width:0}
 .nav-icon{
@@ -828,6 +830,16 @@ header.scrolled .navbar{
   transition:all .22s ease;
   box-shadow:0 0 20px rgba(212,255,0,.2);
 }
+
+/* Google custom button */
+.google-custom-btn{
+  width:100%;padding:.6rem;border-radius:100px;border:1px solid var(--border2);
+  background:linear-gradient(90deg,#fff,#fff);color:#111;font-weight:700;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:.6rem;font-size:.92rem
+}
+.google-custom-btn:hover{filter:brightness(.97)}
+
+.gsi-hint{font-size:.82rem;color:var(--muted);text-align:center;padding:.4rem}
 .btn-full:hover{background:var(--y3);box-shadow:0 0 35px rgba(212,255,0,.4);transform:translateY(-1px)}
 
 /* ════════ ESTIMATOR MODAL ════════ */

@@ -35,13 +35,23 @@ const emailTransportOptions = process.env.EMAIL_SERVICE
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD,
       },
+      tls: {
+        rejectUnauthorized: process.env.EMAIL_TLS_REJECT_UNAUTHORIZED !== 'false',
+      },
     }
   : null;
 
 const emailTransporter = emailEnabled
   ? nodemailer.createTransport(emailTransportOptions)
   : null;
-const emailFrom = process.env.EMAIL_FROM || process.env.EMAIL_USER || 'no-reply@archafricabureau.com';
+const emailFrom = process.env.EMAIL_FROM || process.env.EMAIL_USER || 'Arch Africa Bureau <no-reply@archafricabureau.com>';
+
+if (emailTransporter) {
+  emailTransporter.verify().then(
+    () => console.log('SMTP transporter ready. Email delivery enabled.'),
+    (err) => console.warn('SMTP transporter verification failed:', err.message || err)
+  );
+}
 
 function signToken(user) {
   if (!JWT_SECRET) {
@@ -58,7 +68,7 @@ function publicUser(row) {
   return { id: row.id, name: row.name, email: row.email, role: row.role };
 }
 
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
   if (!name?.trim() || !email?.trim() || !password) {
     return res.status(400).json({ error: 'Name, email, and password are required' });
@@ -77,19 +87,23 @@ router.post('/register', (req, res) => {
 
   const user = db.prepare('SELECT id, name, email, role FROM users WHERE id = ?').get(result.lastInsertRowid);
   const token = signToken(user);
-  // send welcome email if configured
+  let emailSent = false;
+
   if (emailTransporter) {
-    emailTransporter
-      .sendMail({
+    try {
+      await emailTransporter.sendMail({
         from: emailFrom,
         to: user.email,
         subject: 'Welcome to ARCH-AFRICA',
         html: `<p>Hi ${user.name},</p><p>Welcome to ARCH-AFRICA. Your account has been created.</p>`,
-      })
-      .catch((err) => console.error('Welcome email failed:', err));
+      });
+      emailSent = true;
+    } catch (err) {
+      console.error('Welcome email failed:', err);
+    }
   }
 
-  res.status(201).json({ token, user: publicUser(user) });
+  res.status(201).json({ token, user: publicUser(user), emailSent });
 });
 
 // Google sign-in: accept Google ID token from client, verify, and create/find user

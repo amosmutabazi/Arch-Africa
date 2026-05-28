@@ -869,26 +869,31 @@ const { square_feet } = req.body;
 
 ### Integrating Email Notifications
 
-**Current state:** Password reset emails not sent (dev only)
+**Current state:** Registration welcome emails and password reset emails are now sent when SMTP is configured.
 
-**To implement:**
-```javascript
-// server/routes/auth.js — forgot-password endpoint
-const nodemailer = require('nodemailer');
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD
-  }
-});
+**Configuration:**
+- `EMAIL_USER` — your SMTP account email
+- `EMAIL_PASSWORD` — your SMTP password or app password
+- `EMAIL_SERVICE` — optional named provider like `gmail`, `outlook`, or `hotmail`
+- `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_SECURE` — optional manual SMTP settings
+- `EMAIL_FROM` — sender display name (e.g. `Arch Africa Bureau <no-reply@archafricabureau.com>`)
 
-await transporter.sendMail({
-  to: email,
-  subject: 'Reset Your Password',
-  html: `<a href="${resetUrl}">Click here to reset</a>`
-});
+**Example `.env` values:**
+```dotenv
+EMAIL_SERVICE=gmail
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASSWORD=your-gmail-app-password
+EMAIL_FROM="Arch Africa Bureau <no-reply@archafricabureau.com>"
+# or for manual SMTP:
+# EMAIL_HOST=smtp.gmail.com
+# EMAIL_PORT=587
+# EMAIL_SECURE=false
 ```
+
+**Server behavior:**
+- `POST /api/auth/register` sends a welcome email after account creation
+- `POST /api/auth/forgot-password` sends a password reset link if the user exists
+- In development with no SMTP configured, reset endpoint returns the reset URL for local testing
 
 ---
 

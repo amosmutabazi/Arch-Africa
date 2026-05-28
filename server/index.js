@@ -37,6 +37,11 @@ app.get('/api/config', (_req, res) => {
     tawkWidgetId: process.env.TAWK_WIDGET_ID || 'default',
     siteUrl: process.env.SITE_URL || `http://localhost:${PORT}`,
     googleClientId: process.env.GOOGLE_CLIENT_ID || '',
+    emailEnabled: Boolean(
+      process.env.EMAIL_USER &&
+        process.env.EMAIL_PASSWORD &&
+        (process.env.EMAIL_SERVICE || process.env.EMAIL_HOST)
+    ),
   });
 });
 

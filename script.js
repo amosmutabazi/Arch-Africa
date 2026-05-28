@@ -57,11 +57,11 @@ function showPanel(p) {
   if (p === 'login') {
     document.getElementById('pLogin').classList.add('active');
     document.getElementById('authH2').textContent = I18n?.t('auth.welcome', 'Welcome Back') || 'Welcome Back';
-    document.getElementById('authSub').textContent = 'Sign in to your ARCH-AFRICA account.';
+    document.getElementById('authSub').textContent = 'Login to your ARCH-AFRICA account.';
   } else if (p === 'register') {
     document.getElementById('pReg').classList.add('active');
     document.getElementById('authH2').textContent = I18n?.t('auth.create', 'Create Account') || 'Create Account';
-    document.getElementById('authSub').textContent = 'Join ARCH-AFRICA and start your project.';
+    document.getElementById('authSub').textContent = 'Register with Google or email to start your project.';
   } else {
     document.getElementById('pForgot').classList.add('active');
     document.getElementById('authH2').textContent = 'Reset Password';
@@ -74,6 +74,10 @@ document.getElementById('aTabLogin')?.addEventListener('click', () => showPanel(
 document.getElementById('aTabReg')?.addEventListener('click', () => showPanel('register'));
 document.getElementById('openLoginBtn')?.addEventListener('click', () => {
   showPanel('login');
+  openModal('authModal');
+});
+document.getElementById('openRegisterBtn')?.addEventListener('click', () => {
+  showPanel('register');
   openModal('authModal');
 });
 
@@ -105,7 +109,7 @@ async function initGoogleSignIn() {
     if (!clientId) {
       const hint = document.createElement('div');
       hint.className = 'gsi-hint';
-      hint.textContent = 'Google Sign-In not configured (set GOOGLE_CLIENT_ID).';
+      hint.textContent = 'Google sign-in not configured. Please contact admin.';
       const l = document.getElementById('gsiLogin');
       const r = document.getElementById('gsiReg');
       if (l && !l.children.length) l.appendChild(hint.cloneNode(true));
@@ -140,18 +144,42 @@ async function initGoogleSignIn() {
         }
       } catch (e) {
         console.error('Google auth failed', e);
+        showToast(`Google auth error: ${e.message}`);
       }
     };
 
     const tryInit = () => {
       if (window.google && google.accounts && google.accounts.id) {
         try {
-          google.accounts.id.initialize({ client_id: clientId, callback: handleGoogleCredential });
+          google.accounts.id.initialize({
+            client_id: clientId,
+            callback: handleGoogleCredential,
+            error_callback: (e) => {
+              console.error('Google initialization error:', e);
+              showToast('Google sign-in error. Check your client ID.');
+            },
+          });
+
           const l = document.getElementById('gsiLogin');
           const r = document.getElementById('gsiReg');
-          if (l) google.accounts.id.renderButton(l, { theme: 'outline', size: 'large' });
-          if (r) google.accounts.id.renderButton(r, { theme: 'outline', size: 'large' });
-          try { google.accounts.id.prompt(); } catch (e) {}
+          if (l) {
+            l.innerHTML = '';
+            google.accounts.id.renderButton(l, {
+              theme: 'outline',
+              size: 'large',
+              text: 'signin_with',
+            });
+          }
+          if (r) {
+            r.innerHTML = '';
+            google.accounts.id.renderButton(r, {
+              theme: 'outline',
+              size: 'large',
+              text: 'signup_with',
+            });
+          }
+
+          google.accounts.id.prompt();
           console.info('Google Sign-In initialized');
           return true;
         } catch (e) {
