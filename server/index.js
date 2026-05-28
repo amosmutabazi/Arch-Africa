@@ -11,6 +11,7 @@ const { router: paymentRoutes, webhookHandler } = require('./routes/payments');
 const inquiryRoutes = require('./routes/inquiries');
 
 require('./seed');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 const root = path.join(__dirname, '..');
@@ -68,4 +69,3 @@ app.listen(PORT, () => {
     console.warn('⚠ Set a strong JWT_SECRET in .env for production');
   }
 });
-
