@@ -171,7 +171,8 @@ router.post('/forgot-password', async (req, res) => {
     expires
   );
 
-  const resetUrl = `${process.env.SITE_URL}/reset-password.html?token=${token}`;
+  const baseUrl = process.env.SITE_URL || `${req.protocol}://${req.get('host')}`;
+  const resetUrl = `${baseUrl.replace(/\/$/, '')}/reset-password.html?token=${token}`;
   let emailSent = false;
 
   if (emailTransporter) {
