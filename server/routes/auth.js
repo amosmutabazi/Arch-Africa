@@ -172,6 +172,7 @@ router.post('/forgot-password', async (req, res) => {
   );
 
   const resetUrl = `${process.env.SITE_URL}/reset-password.html?token=${token}`;
+  let emailSent = false;
 
   if (emailTransporter) {
     try {
@@ -186,12 +187,13 @@ router.post('/forgot-password', async (req, res) => {
           <p>If you did not request this, you can ignore this email.</p>
         `,
       });
+      emailSent = true;
     } catch (error) {
       console.error('Password reset email failed:', error);
     }
   }
 
-  if (process.env.NODE_ENV === 'development' && !emailTransporter) {
+  if (process.env.NODE_ENV === 'development' && !emailSent) {
     return res.json({ message: 'Reset link created (dev only)', resetUrl });
   }
 

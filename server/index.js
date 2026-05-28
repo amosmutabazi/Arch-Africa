@@ -8,7 +8,9 @@ require('./db');
 const authRoutes = require('./routes/auth');
 const projectRoutes = require('./routes/projects');
 const { router: paymentRoutes, webhookHandler } = require('./routes/payments');
+const inquiryRoutes = require('./routes/inquiries');
 
+require('./seed');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const root = path.join(__dirname, '..');
@@ -30,6 +32,7 @@ app.use(express.static(root));
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/inquiries', inquiryRoutes);
 
 app.get('/api/config', (_req, res) => {
   res.json({
@@ -65,3 +68,4 @@ app.listen(PORT, () => {
     console.warn('⚠ Set a strong JWT_SECRET in .env for production');
   }
 });
+

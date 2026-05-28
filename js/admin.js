@@ -48,18 +48,21 @@ async function loadAdminProjects() {
 
     tbody.innerHTML = projects
       .map(
-        (p) => `
+        (p) => {
+          const status = p.published ? (p.featured ? 'Published, Featured' : 'Published') : 'Draft';
+          return `
       <tr>
         <td><img src="${p.image_url}" alt="${p.title_en}" class="admin-thumb"/></td>
         <td>${p.title_en}</td>
         <td>${p.category}</td>
         <td>${formatPrice(p.price_cents, p.currency)}</td>
-        <td>${p.published ? 'Published' : 'Draft'}</td>
+        <td>${status}</td>
         <td>
           <button type="button" class="admin-sm" data-edit="${p.id}">Edit</button>
           <button type="button" class="admin-sm danger" data-del="${p.id}">Delete</button>
         </td>
-      </tr>`
+      </tr>`;
+        }
       )
       .join('');
 

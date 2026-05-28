@@ -83,7 +83,7 @@ document.getElementById('openRegisterBtn')?.addEventListener('click', () => {
 
 /* ── Dynamic projects (CMS) ── */
 document.addEventListener('DOMContentLoaded', () => {
-  loadProjectsInto('projGrid', { limit: 12, showBuy: true }).then(() => {
+  loadProjectsInto('projGrid', { limit: 12, showBuy: true, params: { featured: 1 } }).then(() => {
     document.getElementById('projTabs')?.addEventListener('click', (e) => {
       const btn = e.target.closest('.tab');
       if (!btn) return;
@@ -439,3 +439,41 @@ window.addEventListener('load', () => {
   document.getElementById('loader')?.classList.add('hide');
   updateAuthUI?.();
 });
+async function submitInquiry(e) {
+  e.preventDefault();
+  const note = document.getElementById('inqNote');
+  const btn = document.querySelector('.inquiry-submit');
+  const body = {
+    name: document.getElementById('inqName').value.trim(),
+    email: document.getElementById('inqEmail').value.trim(),
+    phone: document.getElementById('inqPhone').value.trim(),
+    type: document.getElementById('inqType').value,
+    message: document.getElementById('inqMsg').value.trim(),
+  };
+  if (!body.name || !body.email || !body.message) {
+    note.textContent = '⚠ Please fill in all required fields.';
+    note.style.color = 'red';
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = '⏳ Sending…';
+  note.textContent = '';
+  try {
+    const res = await fetch('/api/inquiries', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error);
+    note.textContent = '✓ ' + data.message;
+    note.style.color = 'var(--y, #c8a951)';
+    document.getElementById('inquiryForm').reset();
+  } catch (err) {
+    note.textContent = '✗ ' + (err.message || 'Failed to send. Please try again.');
+    note.style.color = 'red';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Send Inquiry →';
+  }
+}
