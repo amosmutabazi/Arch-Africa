@@ -536,10 +536,13 @@ header.scrolled .navbar{
 }
 .tab:hover{border-color:rgba(212,255,0,.4);color:var(--white)}
 .tab.active{background:var(--y);color:var(--bg);border-color:var(--y)}
-.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem}
+.proj-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
 .proj-card{
   background:var(--card);border:1px solid var(--border);border-radius:12px;
   overflow:hidden;transition:all .3s ease;position:relative;cursor:pointer;
+  display:flex;flex-direction:column;
+  height:360px;
+  max-height:360px;
 }
 .proj-card:hover{border-color:rgba(212,255,0,.32);box-shadow:0 18px 42px rgba(0,0,0,.35),0 8px 32px rgba(212,255,0,.08);transform:translateY(-3px)}
 .proj-card.hidden{display:none}
@@ -555,20 +558,32 @@ header.scrolled .navbar{
   opacity:0;transform:translateY(8px);
 }
 .proj-card:hover .add-cart{opacity:1;transform:translateY(0)}
-.pc-body{padding:1.2rem}
+.pc-body{padding:1.2rem;display:flex;flex-direction:column;flex:1;justify-content:space-between}
 .pc-badge{
   display:inline-block;background:rgba(212,255,0,.15);color:var(--y);
   font-size:.68rem;font-weight:700;padding:.25rem .65rem;border-radius:100px;
   margin-bottom:.6rem;text-transform:uppercase;letter-spacing:1px;
 }
-.pc-body h3{font-family:'Libre Baskerville',serif;color:var(--white);font-size:.95rem;margin-bottom:.4rem;line-height:1.3}
+.pc-body h3{font-family:'Libre Baskerville',serif;color:var(--white);font-size:.95rem;margin-bottom:.4rem;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+@media (max-width:1000px){
+  .proj-grid{grid-template-columns:repeat(2,1fr)}
+  .proj-card{height:auto;max-height:none}
+}
+@media (max-width:600px){
+  .proj-grid{grid-template-columns:1fr}
+  .proj-card{height:auto;max-height:none}
+}
 .pc-body p{font-size:.78rem;color:var(--muted);line-height:1.5}
-.pc-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem;margin-top:1rem}
-.pc-action{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:.55rem .8rem;border-radius:100px;font-size:.78rem;font-weight:700;text-decoration:none;transition:all .22s;cursor:pointer;border:1px solid transparent}
-.pc-action:hover{transform:translateY(-1px)}
-.pc-action.pc-more{background:rgba(255,255,255,.05);color:var(--white);border-color:rgba(255,255,255,.08)}
-.pc-action.pc-wa{background:#25d366;color:#090909}
-.pc-action.add-cart{background:var(--y);color:var(--bg)}
+.proj-card .pc-body p:not(.pc-price){display:none}
+.pc-actions{display:grid;grid-template-columns:repeat(3,minmax(70px,1fr));gap:.45rem;margin-top:auto;padding-bottom:.75rem;position:relative;z-index:3}
+.pc-action{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:.45rem .75rem;border-radius:999px;font-size:.82rem;font-weight:700;text-decoration:none;transition:all .22s;cursor:pointer;border:1px solid rgba(255,255,255,.15);box-shadow:0 6px 14px rgba(0,0,0,0.16);background:rgba(255,255,255,.08);color:var(--white);white-space:nowrap}
+.pc-action:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,0.18)}
+.pc-action.pc-more{background:rgba(255,255,255,.1);color:var(--white);border-color:rgba(255,255,255,.2)}
+.pc-action.pc-wa{background:#25d366;color:#0a0a0a;border-color:rgba(0,0,0,0.08)}
+.pc-action.pc-add-cart{background:var(--y);color:var(--bg);border-color:rgba(0,0,0,0.08)}
+.add-cart{position:absolute;bottom:1rem;right:1rem;background:var(--y);color:var(--bg);border:none;border-radius:100px;padding:.5rem 1rem;font-size:.78rem;font-weight:700;cursor:pointer;font-family:'Libre Baskerville',serif;transition:all .25s;opacity:0;transform:translateY(8px)}
+.proj-card:hover .add-cart{opacity:1;transform:translateY(0)}
 
 /* ════════ SERVICES ════════ */
 .svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;margin-top:2rem}
@@ -1239,7 +1254,8 @@ header{top:28px!important}
   background:var(--y);color:var(--bg);font-size:.72rem;font-weight:700;cursor:pointer;
 }
 .pc-price{font-family:'Libre Baskerville',serif;color:var(--y);font-weight:700;font-size:.9rem;margin-top:.5rem}
-.pc-img-link{display:block;text-decoration:none}
+.pc-img-link{display:block;text-decoration:none;border:none;background:none;width:100%;padding:0;cursor:pointer}
+.pc-img-link:focus{outline:2px solid rgba(212,255,0,.8);outline-offset:2px}
 .gallery-intro{max-width:560px;margin:0 auto 2rem;color:var(--muted);font-size:.95rem}
 .gallery-loading,.gallery-empty{text-align:center;color:var(--muted);padding:3rem}
 

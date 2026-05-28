@@ -464,7 +464,7 @@ gtag('config', 'G-XXXXXXXXXX');
     
     <button class="btn-full" type="submit">Login →</button>
     <p id="adminLoginMsg" class="auth-msg" style="margin-top: 1rem;"></p>
-    <p class="auth-sub" style="color:var(--muted);font-size:.85rem;margin-top:1rem;">Default admin is seeded on server start. If not configured, use <strong>admin@archafricabureau.com</strong> / <strong>ChangeMeAdmin123!</strong>.</p>
+    <p class="auth-sub" style="color:var(--muted);font-size:.85rem;margin-top:1rem;">Only admin users can see the project list. Default admin is seeded on server start. If not configured, use <strong>admin@archafricabureau.com</strong> / <strong>ChangeMeAdmin123!</strong>.</p>
     <a href="index.html" class="contact-link" style="display:block;text-align:center;margin-top:1.5rem">← Back to site</a>
   </form>
 </div>
@@ -512,6 +512,7 @@ gtag('config', 'G-XXXXXXXXXX');
       <div class="admin-panel-head">
         <h2 id="formTitle">Add New Project</h2>
         <p class="admin-panel-subtitle">Fill in the fields below and save your design.</p>
+        <p class="admin-note">This admin panel shows all saved projects, including drafts. Use the Featured checkbox to promote designs to Trending.</p>
       </div>
 
       <form id="projectForm" enctype="multipart/form-data">
@@ -606,6 +607,7 @@ gtag('config', 'G-XXXXXXXXXX');
             Published
           </label>
         </div>
+        <p class="admin-note">⭐ Only projects marked as “Featured design” and “Published” will appear in Trending Designs on the homepage.</p>
 
         <!-- Action Buttons -->
         <div class="admin-form-btns">
@@ -652,6 +654,7 @@ gtag('config', 'G-XXXXXXXXXX');
 <!-- Scripts -->
 <script src="js/api.js"></script>
 <script src="js/auth-ui.js"></script>
+<script src="js/projects.js"></script>
 <script src="js/admin.js"></script>
 <a class="whatsapp-float" href="https://wa.me/250788000000?text=Hello%20ARCH-AFRICA%2C%20I%20need%20help%20with%20a%20project." target="_blank" rel="noopener" aria-label="Contact us on WhatsApp">
   <span class="whatsapp-icon">💬</span>

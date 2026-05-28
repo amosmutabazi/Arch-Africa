@@ -281,7 +281,7 @@ gtag('config', 'G-XXXXXXXXXX');
         </div>
       </div>
       <div class="about-img-wrap">
-        <div class="about-img-inner" style="background-image:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80');background-size:cover;background-position:center;font-size:0"></div>
+        <div class="about-img-inner" style="background-image:url('https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&q=80');background-size:cover;background-position:center;font-size:0"></div>
       </div>
     </div>
   </div>
@@ -681,6 +681,29 @@ gtag('config', 'G-XXXXXXXXXX');
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
+<!-- Project Details Modal (used by Trending cards) -->
+<div class="backdrop" id="projectDetailsModal">
+  <div class="modal-card project-details-card">
+    <button class="modal-close" onclick="closeProjectDetails()">✕</button>
+    <div class="proj-details-grid">
+      <div class="proj-details-img">
+        <img id="pdImage" src="" alt="Project" style="width:100%;height:auto;border-radius:8px;object-fit:cover"/>
+      </div>
+      <div class="proj-details-info">
+        <h2 id="pdTitle"></h2>
+        <p class="proj-details-category"><strong id="pdCategory"></strong></p>
+        <p class="proj-details-price" id="pdPrice"></p>
+        <p id="pdDescription" class="proj-details-desc"></p>
+        <div class="proj-details-actions">
+          <button class="btn-full" type="button" id="pdAddCart">+ Add to Cart</button>
+          <button class="btn-full-secondary" type="button" onclick="openCostEstimator()">🧮 Cost Estimator</button>
+          <a id="pdWhatsapp" class="btn-full-secondary" target="_blank" rel="noopener">💬 Contact via WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- JavaScript -->
 <script src="js/api.js"></script>
 <script src="js/theme.js"></script>
@@ -689,6 +712,7 @@ gtag('config', 'G-XXXXXXXXXX');
 <script src="js/cart.js"></script>
 <script src="js/projects.js"></script>
 <script src="js/chat.js"></script>
+<script src="js/gallery-page.js"></script>
 <script src="script.js"></script>
 <script>window.__GOOGLE_CLIENT_ID__ = '553141827957-q3aok3tc9jtqpno0p6lb4g1d66lkd8i7.apps.googleusercontent.com';</script>
 <a class="whatsapp-float" href="https://wa.me/250788000000?text=Hello%20ARCH-AFRICA%2C%20I%20need%20help%20with%20a%20project." target="_blank" rel="noopener" aria-label="Contact us on WhatsApp">
