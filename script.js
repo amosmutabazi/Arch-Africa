@@ -182,11 +182,78 @@ async function initGoogleSignIn() {
 
 document.addEventListener('DOMContentLoaded', initGoogleSignIn);
 
-/* ── Hero slideshow & morph text ── */
+/* --- Hero slideshow & morph text --- */
 const morphWords = ['Africa', 'Kigali', 'East Africa', 'Your Vision', 'The Future', 'Our Community'];
-let curSlide = 0, curWord = 0;
-const slides = document.querySelectorAll('.hero-slide');
-const dots = document.querySelectorAll('.hero-dot');
+let curSlide = 0;
+let curWord = 0;
+let slides = [];
+let dots = [];
+let heroInterval = null;
+
+async function initHeroSlides() {
+  const heroSlidesEl = document.getElementById('heroSlides');
+  const heroDotsRow = document.getElementById('heroDots');
+  if (!heroSlidesEl || !heroDotsRow) return;
+
+  curSlide = 0;
+  curWord = 0;
+
+  let imageUrls = [
+    'assets/hero/hero-1.jpg',
+    'assets/hero/hero-2.jpg',
+    'assets/hero/hero-3.jpg',
+    'assets/hero/hero-4.jpg',
+    'assets/hero/hero-5.jpg',
+  ];
+
+  try {
+    const data = await API.hero.list();
+    if (Array.isArray(data.images) && data.images.length) {
+      imageUrls = data.images;
+    }
+  } catch (err) {
+    console.warn('Unable to load hero images:', err.message || err);
+  }
+
+  heroSlidesEl.innerHTML = imageUrls
+    .map((src, index) => `<div class="hero-slide${index === 0 ? ' active' : ''}" data-bg="${src}"></div>`)
+    .join('');
+
+  heroDotsRow.innerHTML = imageUrls
+    .map((_, index) => `<button class="hero-dot${index === 0 ? ' active' : ''}" data-i="${index}"></button>`)
+    .join('');
+
+  slides = Array.from(document.querySelectorAll('.hero-slide'));
+  dots = Array.from(document.querySelectorAll('.hero-dot'));
+
+  slides.forEach((slide) => {
+    const bg = slide.dataset.bg;
+    if (bg) slide.style.backgroundImage = `url('${bg}')`;
+  });
+
+  dots.forEach((d) => d.addEventListener('click', () => goSlide(+d.dataset.i)));
+  updateHeroCounter();
+  resetHeroInterval();
+}
+
+function resetHeroInterval() {
+  if (heroInterval) clearInterval(heroInterval);
+  heroInterval = setInterval(() => {
+    if (!slides.length) return;
+    goSlide((curSlide + 1) % slides.length);
+    morphNext();
+  }, 4000);
+}
+
+function updateHeroCounter() {
+  const heroNum = document.getElementById('heroNum');
+  if (!heroNum) return;
+  if (!slides.length) {
+    heroNum.textContent = '00 / 00';
+    return;
+  }
+  heroNum.textContent = `${String(curSlide + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+}
 
 function goSlide(i) {
   if (!slides.length) return;
@@ -195,10 +262,8 @@ function goSlide(i) {
   curSlide = i;
   slides[curSlide].classList.add('active');
   dots[curSlide]?.classList.add('active');
-  const heroNum = document.getElementById('heroNum');
-  if (heroNum) heroNum.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+  updateHeroCounter();
 }
-dots.forEach((d) => d.addEventListener('click', () => goSlide(+d.dataset.i)));
 
 function morphNext() {
   const el = document.getElementById('morphWord');
@@ -213,14 +278,12 @@ function morphNext() {
   }, 400);
 }
 
-if (slides.length) {
-  setInterval(() => {
-    goSlide((curSlide + 1) % slides.length);
-    morphNext();
-  }, 4000);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initHeroSlides);
+} else {
+  initHeroSlides();
 }
-
-/* ── Search ── */
+/* --- Search --- */
 let searchData = [
   { name: 'Project Gallery', cat: 'Page', sec: 'gallery.html' },
   { name: 'Architectural Drawings', cat: 'Service', sec: '#services' },

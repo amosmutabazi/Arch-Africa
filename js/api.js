@@ -31,6 +31,9 @@ const API = {
 
     const res = await fetch(path, { ...options, headers });
     const data = await res.json().catch(() => ({}));
+    if (res.status === 401) {
+      this.clearAuth();
+    }
     if (!res.ok) throw new Error(data.error || res.statusText || 'Request failed');
     return data;
   },
@@ -55,6 +58,12 @@ const API = {
     update: (id, formData) =>
       API.request(`/api/projects/${id}`, { method: 'PUT', body: formData, headers: {} }),
     remove: (id) => API.request(`/api/projects/${id}`, { method: 'DELETE' }),
+  },
+  hero: {
+    list: () => API.request('/api/hero-images'),
+    upload: (formData) =>
+      API.request('/api/hero-images', { method: 'POST', body: formData, headers: {} }),
+    remove: (name) => API.request(`/api/hero-images/${encodeURIComponent(name)}`, { method: 'DELETE' }),
   },
   payments: {
     config: () => API.request('/api/payments/config'),

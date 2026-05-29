@@ -9,6 +9,7 @@ const authRoutes = require('./routes/auth');
 const projectRoutes = require('./routes/projects');
 const { router: paymentRoutes, webhookHandler } = require('./routes/payments');
 const inquiryRoutes = require('./routes/inquiries');
+const heroImageRoutes = require('./routes/hero-images');
 
 require('./seed');
 
@@ -34,17 +35,26 @@ app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/inquiries', inquiryRoutes);
+app.use('/api/hero-images', heroImageRoutes);
 
 app.get('/api/config', (_req, res) => {
   res.json({
     tawkPropertyId: process.env.TAWK_PROPERTY_ID || '',
     tawkWidgetId: process.env.TAWK_WIDGET_ID || 'default',
     siteUrl: process.env.SITE_URL || `http://localhost:${PORT}`,
+    gaTrackingId: process.env.GA_TRACKING_ID || '',
+    adminWhatsAppNumber: process.env.ADMIN_WHATSAPP_NUMBER || '',
     googleClientId: process.env.GOOGLE_CLIENT_ID || '',
     emailEnabled: Boolean(
       process.env.EMAIL_USER &&
         process.env.EMAIL_PASSWORD &&
         (process.env.EMAIL_SERVICE || process.env.EMAIL_HOST)
+    ),
+    twilioEnabled: Boolean(
+      process.env.TWILIO_ACCOUNT_SID &&
+      process.env.TWILIO_AUTH_TOKEN &&
+      process.env.TWILIO_WHATSAPP_FROM &&
+      process.env.ADMIN_WHATSAPP_NUMBER
     ),
   });
 });

@@ -47,7 +47,11 @@ Prices on projects are stored in **USD cents** (e.g. `29900` = $299.00).
 - Configure real SMTP for registration and password reset emails using `EMAIL_USER`, `EMAIL_PASSWORD`, and `EMAIL_SERVICE` or `EMAIL_HOST`/`EMAIL_PORT`  
 - If using Gmail, create an App Password or enable SMTP access for the account  
 - Add your Tawk.to property ID  
+- Add `GA_TRACKING_ID` for Google Analytics tracking  
+- Add `ADMIN_WHATSAPP_NUMBER` plus optional Twilio config for inquiry WhatsApp alerts  
 - Deploy behind HTTPS with `SITE_URL` set to your domain  
+- Add `sitemap.xml` and submit it to Search Console  
+- Add your own hero homepage images in `assets/hero/` or upload new ones directly from the Admin CMS hero gallery.  
 - Replace Unsplash seed images with real project photos via Admin  
 
 ## API overview
@@ -59,4 +63,7 @@ Prices on projects are stored in **USD cents** (e.g. `29900` = $299.00).
 - `POST /api/projects` (admin, multipart)  
 - `PUT /api/projects/:id` (admin)  
 - `DELETE /api/projects/:id` (admin)  
+- `GET /api/hero-images` (public list)  
+- `POST /api/hero-images` (admin, multipart)  
+- `DELETE /api/hero-images/:name` (admin)  
 - `POST /api/payments/create-checkout-session` (auth, `{ projectIds: [1,2] }`)  

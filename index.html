@@ -17,14 +17,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="styles.css"/>
 
-<!-- Google Analytics: replace G-XXXXXXXXXX with your GA measurement ID -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-XXXXXXXXXX');
-</script>
 </head>
 <body>
 
@@ -97,9 +89,8 @@ gtag('config', 'G-XXXXXXXXXX');
         🛒<span class="c-badge" id="cartBadge">0</span>
       </button>
 
-      <!-- Login/Register buttons (when logged out) -->
+      <!-- Login button only; Register is available inside the login modal -->
       <button class="btn-login" id="openLoginBtn" data-i18n="nav.login">Login</button>
-      <button class="btn-login" id="openRegisterBtn">Register</button>
 
       <!-- User profile (when logged in) -->
       <div id="userActions" style="display:none" class="user-pill">
@@ -151,13 +142,7 @@ gtag('config', 'G-XXXXXXXXXX');
 <main id="main">
 <!-- ════════ HERO ════════ -->
 <section id="home" class="hero-section">
-  <div class="hero-slides" id="heroSlides">
-    <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&q=80')"></div>
-    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1600&q=80')"></div>
-    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&q=80')"></div>
-    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1600&q=80')"></div>
-    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1600&q=80')"></div>
-  </div>
+  <div class="hero-slides" id="heroSlides"></div>
   <div class="hero-overlay"></div>
   <div class="hero-noise"></div>
 
@@ -176,14 +161,8 @@ gtag('config', 'G-XXXXXXXXXX');
         <button class="hero-btn-s" onclick="openModal('estimatorModal')" data-i18n="hero.estimate">Get Cost Estimate</button>
       </div>
       <div class="hero-counter-wrap">
-        <div class="hero-dots-row" id="heroDots">
-          <button class="hero-dot active" data-i="0"></button>
-          <button class="hero-dot" data-i="1"></button>
-          <button class="hero-dot" data-i="2"></button>
-          <button class="hero-dot" data-i="3"></button>
-          <button class="hero-dot" data-i="4"></button>
-        </div>
-        <span class="hero-dot-num" id="heroNum">01 / 05</span>
+        <div class="hero-dots-row" id="heroDots"></div>
+        <span class="hero-dot-num" id="heroNum">00 / 00</span>
       </div>
     </div>
     <aside class="hero-side">
@@ -280,8 +259,8 @@ gtag('config', 'G-XXXXXXXXXX');
           <div class="about-num"><div class="about-num-val">100%</div><div class="about-num-lbl">Permit Success</div></div>
         </div>
       </div>
-      <div class="about-img-wrap">
-        <div class="about-img-inner" style="background-image:url('https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&q=80');background-size:cover;background-position:center;font-size:0"></div>
+      <div class="about-img-wrap" style="min-height:600px;">
+        <div class="about-img-inner" style="background-image:url('assets/villa.png');background-size:cover;background-position:center;font-size:0;min-height:500px;border-radius:12px;"></div><div class="about-img-inner" style="background-image:url('assets/villa.png');background-size:cover;background-position:center;font-size:0;min-height:600px;height:100%;border-radius:12px;"></div>
       </div>
     </div>
   </div>
@@ -460,27 +439,25 @@ gtag('config', 'G-XXXXXXXXXX');
         <h4>Arch-Africa Bureau Ltd.</h4>
 
         <div class="footer-contact">
-          <strong>Rwanda:</strong>
+          <strong>Rwanda</strong>
           <p>Location: Kigali-Kicukiro</p>
           <p>Contact: +250 798 541 111 (Call & WhatsApp)</p>
         </div>
 
         <div class="footer-contact" style="margin-top:20px;">
-          <strong>Ghana:</strong>
-          <p>Location: Accra – Teshie rasta road opposite pelican Palace</p>
+          <strong>Ghana</strong>
+          <p>Location: Accra – Teshie rasta road opposite Pelican Palace</p>
           <p>Contact: +233 027 426 8550 (Call & WhatsApp)</p>
         </div>
 
-        <!-- Social Icons -->
-      <div class="f-socials">
-  <a href="https://www.linkedin.com" class="f-social" target="_blank" rel="noopener" title="LinkedIn">💼</a>
-  <a href="https://twitter.com" class="f-social" target="_blank" rel="noopener" title="Twitter/X">𝕏</a>
-  <a href="https://www.instagram.com" class="f-social" target="_blank" rel="noopener" title="Instagram">📷</a>
-  <a href="https://www.facebook.com" class="f-social" target="_blank" rel="noopener" title="Facebook">📘</a>
-</div>
-
+        <div class="f-socials" style="margin-top:1.5rem;">
+          <a href="https://www.linkedin.com" class="f-social" target="_blank" rel="noopener" title="LinkedIn">💼</a>
+          <a href="https://twitter.com" class="f-social" target="_blank" rel="noopener" title="Twitter/X">𝕏</a>
+          <a href="https://www.instagram.com" class="f-social" target="_blank" rel="noopener" title="Instagram">📷</a>
+          <a href="https://www.facebook.com" class="f-social" target="_blank" rel="noopener" title="Facebook">📘</a>
+        </div>
+      </div>
     </div>
-  </div>
 
   <!-- Bottom -->
   <div class="f-bottom">
@@ -706,6 +683,7 @@ gtag('config', 'G-XXXXXXXXXX');
 
 <!-- JavaScript -->
 <script src="js/api.js"></script>
+<script src="js/analytics.js"></script>
 <script src="js/theme.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/auth-ui.js"></script>

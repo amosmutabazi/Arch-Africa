@@ -150,9 +150,84 @@ async function deleteProject(id) {
   }
 }
 
+async function loadHeroGallery() {
+  const heroGallery = document.getElementById('heroGallery');
+  if (!heroGallery) return;
+
+  try {
+    const { images } = await API.hero.list();
+    if (!images || !images.length) {
+      heroGallery.innerHTML = `<div class="admin-note">No hero images uploaded yet. Upload a file to populate the homepage slideshow.</div>`;
+      return;
+    }
+
+    heroGallery.innerHTML = images
+      .map((src) => {
+        const name = src.split('/').pop();
+        return `
+          <div class="admin-hero-thumb">
+            <img src="${src}" alt="Hero image ${name}" />
+            <button type="button" data-delete="${name}">Delete</button>
+          </div>
+        `;
+      })
+      .join('');
+
+    heroGallery.querySelectorAll('[data-delete]').forEach((btn) => {
+      btn.addEventListener('click', () => deleteHeroImage(btn.dataset.delete));
+    });
+  } catch (e) {
+    heroGallery.innerHTML = `<div class="admin-note">${e.message}</div>`;
+  }
+}
+
+async function submitHeroImage(e) {
+  e.preventDefault();
+  if (!(await requireAdmin())) {
+    showToast('Please log in as an admin to upload hero images.');
+    return;
+  }
+
+  const file = document.getElementById('fHeroImage').files[0];
+  if (!file) {
+    showToast('Please select an image to upload.');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('image', file);
+
+  try {
+    await API.hero.upload(formData);
+    showToast('Hero image uploaded successfully');
+    e.target.reset();
+    await loadHeroGallery();
+  } catch (err) {
+    if (err.message === 'Authentication required' || err.message === 'Invalid or expired token') {
+      API.clearAuth();
+      await requireAdmin();
+      showToast('Session expired, please log in again.');
+      return;
+    }
+    showToast(err.message);
+  }
+}
+
+async function deleteHeroImage(name) {
+  if (!confirm('Delete this hero image?')) return;
+  try {
+    await API.hero.remove(name);
+    showToast('Hero image removed');
+    await loadHeroGallery();
+  } catch (e) {
+    showToast(e.message);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('adminLoginForm')?.addEventListener('submit', adminLogin);
   document.getElementById('projectForm')?.addEventListener('submit', submitProject);
+  document.getElementById('heroForm')?.addEventListener('submit', submitHeroImage);
   document.getElementById('resetFormBtn')?.addEventListener('click', resetForm);
 
   if (API.getToken()) {
@@ -164,5 +239,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  if (await requireAdmin()) await loadAdminProjects();
+  if (await requireAdmin()) {
+    await loadAdminProjects();
+    await loadHeroGallery();
+  }
 });
