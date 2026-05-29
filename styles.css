@@ -55,25 +55,25 @@ body:has(a:hover) .cursor-ring,
 body:has(button:hover) .cursor-ring{width:52px;height:52px;border-color:var(--y)}
 
 /* ════════ NAVBAR ════════ */
-header{position:fixed;top:0;left:0;right:0;z-index:400;padding:.9rem 1rem}
+header{position:fixed;top:0;left:0;right:0;z-index:400;padding:.85rem 2rem;}
 .navbar{
-  width:fit-content;
+  width:100%;
   max-width:100%;
-  margin:0 auto;
-  background:rgba(8,8,8,.82);
-  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border:1px solid rgba(212,255,0,.12);
-  border-radius:100px;
-  padding:0 .5rem 0 1.2rem;
+  margin:0;
+  background:rgba(8,8,8,.24);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border:none;
+  border-radius:0;
+  padding:0 0.75rem;
   display:flex;
   align-items:center;
-  gap:.15rem;
+  gap:1rem;
   position:relative;
-  height:52px;
-  box-shadow:0 0 0 1px rgba(0,0,0,.5),0 8px 40px rgba(0,0,0,.6);
+  height:64px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.03),0 18px 48px rgba(0,0,0,.35);
   transition:all .3s ease;
 }
-.navbar:hover{border-color:rgba(212,255,0,.22)}
+.navbar:hover{border-color:rgba(212,255,0,.12)}
 header.scrolled .navbar{
   background:rgba(8,8,8,.95);
   border-color:rgba(212,255,0,.2);
@@ -98,11 +98,11 @@ header.scrolled .navbar{
 .nav-links{
   display:flex;
   align-items:center;
-  gap:0;
+  gap:1rem;
   justify-content:flex-start;
   min-width:0;
   flex-wrap:nowrap;
-  overflow:hidden;
+  overflow:visible;
   position:static;
   max-width:none;
   padding:0;
@@ -110,26 +110,26 @@ header.scrolled .navbar{
 }
 .nav-link{
   position:relative;
-  display:flex;
+  display:inline-flex;
   align-items:center;
-  gap:.28rem;
-  color:var(--y);
+  gap:.25rem;
+  color:var(--white);
   text-decoration:none;
-  font-size:.78rem;
+  font-size:.92rem;
   font-weight:600;
-  padding:.34rem .62rem;
-  border-radius:100px;
+  padding:.2rem .15rem;
+  border-radius:0;
   transition:all .25s ease;
   white-space:nowrap;
   cursor:pointer;
-  background:rgba(212,255,0,.1);
-  border:1px solid rgba(212,255,0,.25);
+  background:transparent;
+  border:0;
   font-family:'Libre Baskerville',serif;
   flex-shrink:0;
 }
-.nav-link:hover{background:rgba(212,255,0,.18);border-color:var(--y);color:var(--y)}
-.nav-link.active{background:rgba(212,255,0,.22);border-color:var(--y);color:var(--y)}
-.nav-link .arr{font-size:.55rem;transition:transform .2s;opacity:.5}
+.nav-link:hover{color:var(--y);text-shadow:0 0 12px rgba(212,255,0,.15);}
+.nav-link.active{color:var(--y)}
+.nav-link .arr{font-size:.6rem;transition:transform .2s;opacity:.65}
 .nav-item:hover .nav-link .arr{transform:rotate(180deg);opacity:1}
 
 /* User Guide pill button in nav */
@@ -191,22 +191,22 @@ header.scrolled .navbar{
 .nav-actions{
   display:flex;
   align-items:center;
-  gap:.15rem;
+  gap:.75rem;
   flex:0 0 auto;
   min-width:0;
-  margin-left:.1rem;
+  margin-left:auto;
   justify-content:flex-end;
   flex-wrap:nowrap;
 }
 .nav-actions > *{min-width:0}
 .nav-icon{
-  width:34px;height:34px;border-radius:100px;border:1px solid var(--border2);
-  background:transparent;color:var(--muted);cursor:pointer;
+  width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);color:var(--white);cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  transition:all .2s ease;font-size:.9rem;position:relative;
+  transition:all .2s ease;font-size:.95rem;position:relative;
   flex-shrink:0;
 }
-.nav-icon:hover{border-color:rgba(212,255,0,.4);color:var(--y);background:rgba(212,255,0,.07)}
+.nav-icon:hover{border-color:rgba(212,255,0,.45);color:var(--y);background:rgba(212,255,0,.1)}
 .c-badge{
   position:absolute;top:-4px;right:-4px;background:var(--y);color:var(--bg);
   width:15px;height:15px;border-radius:50%;font-size:.58rem;font-weight:800;
